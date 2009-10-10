@@ -1,0 +1,12 @@
+useDynLib(cudaBayesreg)
+export(
+	cudaMultireg.slice,
+	premask,
+	plot.hcoef.post,
+	pmeans.hcoef,
+	post.ppm,
+	post.simul.betadraw,
+	post.simul.hist,
+	post.tseries,
+	read.fmrisample,
+	regpostsim)
