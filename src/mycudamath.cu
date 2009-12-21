@@ -4,7 +4,7 @@ __device__ void choldcU(float* a, int* pn, float* y)
 	int n =  *pn;
 	int i,j,k;
 	float sum;
-	unsigned int ij, ik, jk, ii, ji;
+	unsigned int ij, ik, jk, ii, ji, nk;
 	//
 	for (i=0;i<n;i++) 
 		for (j=0;j<n;j++) {
@@ -16,7 +16,8 @@ __device__ void choldcU(float* a, int* pn, float* y)
 		for (j=i;j<n;j++) {
 			ij=i+n*j;
 			for (sum=y[ij],k=i-1;k>=0;k--) {
-		 		ik=i+n*k; jk=j+n*k;
+				nk=n*k;
+		 		ik=i+nk; jk=j+nk;
 				sum -= y[ik]*y[jk];
 			}
 			ii=i+n*i;
@@ -103,14 +104,15 @@ __device__ void mtcrossp(float *a, float *b, float *c, int *pn)
 {
 	int n = *pn;
 	float sum;
-	int ik, kj, ij;
+	int ik, kj, ij, nk;
 	//
   for (int i=0; i<n; i++)
 		for (int j=0; j<n; j++) {
 		  sum = 0.0;
 		  for (int k=0; k<n; k++) {
-				ik=i+n*k;
-				kj=k*n+j;
+				nk=n*k;
+				ik=i+nk;
+				kj=nk+j;
 				sum += a[ik] * b[kj];
 			}
 			ij=i+n*j;
@@ -185,12 +187,13 @@ __device__ void mvtcrossp(float *a, float *b, float *c, int *pm, int* pn)
 	int m = *pm;
 	int n = *pn;
 	float sum;
-	int ik;
+	int ik, mi;
 	//
   for (int i=0; i<n; i++) {
 		sum = 0.0;
+		mi=m*i;
 		for (int k=0; k<m; k++) {
-			ik=m*i+k;
+			ik=mi+k;
 			sum += a[ik] * b[k];
 		}
 		c[i] = sum;

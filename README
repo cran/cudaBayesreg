@@ -1,0 +1,74 @@
+*Installation Notes and Requirements:*
+
+To use the *cudaBayesreg* package on your system you need the following
+installed:
+
+   1.
+
+      CUDA-capable GPU
+
+   2.
+
+      CUDA software, which includes the *nvcc* (release 3.0-beta1)
+      NVIDIA Cuda Compiler driver (available at no cost from
+      http://www.nvidia.com/cuda)
+
+   3.
+
+      A supported version of Linux with g++ GNU compiler; (gcc/g++
+      version 3.4 or 4.3 is required, since nvcc is currently not fully
+      compatible with gcc v. 4.4).
+
+*Notes*:
+
+   1.
+
+      A general purpose C compiler is needed by nvcc. On Linux
+      platforms, the compiler is assumed to be ‘gcc’ , or ‘g++’ for
+      linking. In order to use *gcc version 3.4,* for instance, rename
+      it gcc34, and make a link in directory “*/tmp*” to it, e.g. “ln -s
+      /usr/bin/gcc34 gcc”. The package's Makefiles expects this
+      configuration to be in place (it uses the nvcc flag “*-ccbin /tmp*”).
+
+   2.
+
+      In some Linux distributions (e.g. Fedora), to install “gcc34” and
+      “g++34” you just need to install the GNU compatibility packages
+      “compat-gcc-34” and “compat-gcc-34-c++”.
+
+   3.
+
+      To reconfigure the Makefiles with a different “-ccbin” flag, edit
+      the “configure.ac” file and run “autoconf; configure” in the shell.
+
+   4.
+
+      The *cutil* library used in the source code comes from the CUDA's
+      SDK - NVIDIA GPU Computing Software Development Kit
+      (http://www.nvidia.com/cuda). However, since we need to build the
+      shared version of the cutil library (*libcutil.so*) to use it in
+      R, the package includes in src/cutil the include and source files
+      required to build libcutil.so. The Makefile builds libcutil.so and
+      install it in src/cutil.
+
+   5.
+
+      The package's host C++ code uses the shared version of the newmat
+      matrix library (http://www.robertnz.net/cpp_site.html). The
+      Makefile builds *libnewmat.so* and install it in src/newmat11.
+
+   6.
+
+      In *cudaMultireg.cu* three constants control the amount of CUDA
+      allocated space: REGDIM=4096, OBSDIM=128, and XLIM=5. These
+      constants define the maximum number of parallel regressions, the
+      maximum length of voxel time-series, and the maximum number of
+      regression variables, respectively. If these values do not suit
+      your needs modify the values, and recompile the code.
+
+
+
+
+
+
+

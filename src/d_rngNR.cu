@@ -2,14 +2,22 @@
 #include <math.h>
 #include "d_nr3.h"
 
+/*
+__device__ static struct __align__(16) RNG {
+	Ullong U,V,W;
+}rng;
+*/
+
 
 __device__ struct __align__(16) Ran {
 	Ullong u,v,w;
-	 __device__ Ran(Ullong j) : v(4101842887655102017LL), w(1) {
+	__device__ Ran() : v(4101842887655102017LL), w(1) {}
+	__device__ Ran(Ullong j) : v(4101842887655102017LL), w(1) {
 	// Constructor. Call with any integer seed (except value of v above).
 		u = j ^ v; int64();
 		v = u; int64();
 		w = v; int64();
+/* rng.U = u; rng.V = v; rng.W = w; */
 	}
 	
 	 __device__ inline Ullong int64() {
@@ -37,10 +45,13 @@ struct __align__(16) Normaldev_BM : Ran {
 	// Structure for normal deviates.
 	Doub mu,sig;
 	Doub storedval;
-	 __device__ Normaldev_BM(Doub mmu, Doub ssig, Ullong i)
+
+	__device__ Normaldev_BM() : Ran(), mu(0), sig(1), storedval(0.) {}
+
+	__device__ Normaldev_BM(Doub mmu, Doub ssig, Ullong i)
 	: Ran(i), mu(mmu), sig(ssig), storedval(0.) {}
 	// Constructor arguments are mu, sigma, and a random sequence seed.
-	 __device__ Doub dev() {
+	 __device__ inline Doub dev() {
 		// Return a normal deviate.
 		Doub v1,v2,rsq,fac;
 		if (storedval == 0.) {
@@ -74,7 +85,7 @@ struct __align__(16) Gammadev : Normaldev_BM {
 		a1 = alph-1./3.;
 		a2 = 1./sqrt(9.*a1);
 	}
-	 __device__ Doub dev() {
+	 __device__ inline Doub dev() {
 	// Return a gamma deviate by the method of Marsaglia and Tsang.
 		Doub u,v,x;
 		do {
@@ -95,13 +106,13 @@ struct __align__(16) Gammadev : Normaldev_BM {
 };
 
 
-__device__ void d_rnorm(Normaldev_BM* nd,  int n, float mu, float sig, Doub* res)
+__device__ inline void d_rnorm(Normaldev_BM* nd,  int n, float mu, float sig, Doub* res)
 {
 	for(int i=0; i<n; i++) 
 		res[i] = nd->dev();
 }
 	
-__device__ void d_rchisq(Gammadev* chi, int n, Doub* res)
+__device__ inline void d_rchisq(Gammadev* chi, int n, Doub* res)
 {
 	for(int i=0; i<n; i++) 
 		res[i] = chi->dev();

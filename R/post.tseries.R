@@ -41,7 +41,7 @@ function(out, slicedata, vreg=2)
          yfa <- X%*%betabar.a
          # yfn <- X%*%betabar.n
          #--------------
-         x11(width=7, height=3.5)
+         # x11(width=7, height=3.5)
          # par(mfrow=c(2,1), mar=c(4,2,2,1)+0.1)
          # par(mfrow=c(2,1), mar=c(4,2,2,1)+0.1)
          #--------------

@@ -30,7 +30,7 @@ function (x, spmname, spm, burnin = trunc(0.1 * R), ...)
     nx <- min(30, len)
     rsam <- sort(sample(spm, nx))
     print(rsam)
-    x11()
+    # x11()
     par(mfrow = c(1, 1), ask = T)
     par(las = 3) # horizontal labeling 
     for (var in 1:nvar) {

@@ -1786,9 +1786,7 @@ public:
    GeneralMatrix* Evaluate(MatrixType mt=MatrixTypeUnSp);
    friend class BaseMatrix;
    ReturnMatrix(const ReturnMatrix& tm) : BaseMatrix(), gm(tm.gm) {}
-
-   ReturnMatrix(const GeneralMatrix* gmx) : gm((GeneralMatrix*)gmx) {}
-//?   ReturnMatrix(const GeneralMatrix* gmx) : gm((GeneralMatrix*&)gmx) {}
+//??   ReturnMatrix(const GeneralMatrix* gmx) : gm((GeneralMatrix*&)gmx) {}
 //   ReturnMatrix(GeneralMatrix&);
    MatrixBandWidth bandwidth() const;
    NEW_DELETE(ReturnMatrix)

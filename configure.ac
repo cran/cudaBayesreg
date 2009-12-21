@@ -1,4 +1,4 @@
-AC_INIT([cudaBayesreg], 0.1-1)
+AC_INIT([cudaBayesreg], 0.2-1)
 
 : ${R_HOME=`R RHOME`}
 if test -z "${R_HOME}"; then

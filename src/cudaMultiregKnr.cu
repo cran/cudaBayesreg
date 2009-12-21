@@ -8,19 +8,19 @@
 __global__ void
 cudaruniregNRK(float* d_betabar, float* tau, float* y, int nu, int nreg, int nobs, int m, int seed)
 {
-	int ti = blockIdx.x * blockDim.x + threadIdx.x;
+	const int ti = blockIdx.x * blockDim.x + threadIdx.x;
 	if(ti >= nreg) return;
 //
-	float df = nu+nobs; 
+	const float df = nu+nobs; 
 	Gammadev drng(df / 2.0, 0.5, seed+ti);
 //
 	float* X = d_X;
 	float* XpX = d_XpX;
 	float* A = d_Abeta;
 	float* ssq = d_ssq;
-	int mxm = m*m;
+	const int mxm = m*m;
 //
- 	float	sigmasq = tau[ti];
+ 	const float	sigmasq = tau[ti];
 	//----------------------------
   // IR=backsolve(chol(XpX/sigmasq+A),diag(k))
 	float IR[MDIM];
@@ -92,7 +92,7 @@ cudaruniregNRK(float* d_betabar, float* tau, float* y, int nu, int nreg, int nob
 	// Results
 	tau[ti] = (nu*ssq[ti] + s)/rchi;
 
-	__syncthreads();
+	//	__syncthreads();
 
 	int ix;
 	for(int i=0; i < m; i++) {

@@ -2,6 +2,9 @@
 post.ppm <-
 function(out, slicedata, vreg = 2, swap = F, plot = T)
 {
+    x11(width=4,height=4.5)
+    op <- par(no.readonly = TRUE)
+    on.exit(par(op))
     # Mask out slice times series
     ymask <- premask(slicedata)
     kin <- ymask$kin
@@ -14,8 +17,8 @@ function(out, slicedata, vreg = 2, swap = F, plot = T)
     dm <- dim(mask)
     # cat("mask ",dm,"\n")
     if(plot) { # initial pre-filtered image
-        x11(width=4,height=4.5)
-        par(mar=c(0,0,2,0), xaxt="n", yaxt="n", ask=F)
+        #x11(width=4,height=4.5)
+        par(mar=c(0,0,2,0), xaxt="n", yaxt="n", ask=T)
         image(niislicets, col=heat.colors(256), main="initial pre-filtered image",
                   axes=F)
         # image(niislicets[,,1], col=gray((0:255)/256))
@@ -53,8 +56,8 @@ function(out, slicedata, vreg = 2, swap = F, plot = T)
     if(swap) 
         ppm.m <- ppm.m[dm[1]:1, ] # ! radiological convention 
     if(plot) {
-        x11(width=4,height=4.5)
-        par(mar=c(0,0,2,0), xaxt="n", yaxt="n", ask=F)
+        # x11(width=4,height=4.5)
+        par(mar=c(0,0,2,0), xaxt="n", yaxt="n", ask=T)
     		main <- paste("ppm image ; vreg = ",vreg,sep="") 
         image(ppm.m, col=heat.colors(256), main=main, axes=F)
         # image(ppm.m, col=gray((0:255)/256), main="ppm image", axes=F)

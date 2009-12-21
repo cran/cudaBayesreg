@@ -1,4 +1,3 @@
-
 // Interface with R
 
 #define WANT_STREAM									// include.h will get stream fns
@@ -21,13 +20,16 @@ using namespace NEWMAT;							// access NEWMAT namespace
 #include <cutil_inline.h>
 #define BLOCK 64		// specify CUDA block size
 #define XDIM 5			//  max number of reg. coeffs.
+// #define XDIM 8			//  max number of reg. coeffs.
 #define MDIM XDIM*XDIM
 
+// #define OBSDIM 96 	// max length of time series obs.; must be >= nobs
 #define OBSDIM 128 	// max length of time series obs.; must be >= nobs
 #define REGDIM 4096 // max. n.of regressions; must be >= nreg
 
 // #define EMU 1
 #define TIMER 1
+
 
 // Preprocessed input option data
 // allocate constant memory
@@ -53,6 +55,7 @@ void cudaMultireg(float* y, float* X, int* pnue, int* pnreg, int* pnobs, int* pn
 	int nreg = (*pnreg);
 	int nobs = (*pnobs);
 	int nvar = (*pnvar);
+	int nue = (*pnue);
 	int nu = (*pnue) + nvar;
 	int R = *pR;
 	int keep = *pkeep; 
@@ -69,40 +72,40 @@ void cudaMultireg(float* y, float* X, int* pnue, int* pnreg, int* pnobs, int* pn
 	XM0 << X; 
 	Matrix XM = XM0.t();
 	Matrix XpX = crossprod(XM, XM);
-	Real* pXpX = XpX.data();
+	float* pXpX = XpX.data();
 //
-	DiagonalMatrix D(nvar); D =	1;
+	DiagonalMatrix D(nvar); D =	1.0f;
 	SymmetricMatrix Vbeta(nvar);
-	Vbeta = 0;
+	Vbeta = 0.f;
 	Vbeta.inject(D);
 
-	Matrix Betabar(nreg, nvar); Betabar = 0;
-	Matrix Abeta(nvar,nvar); Abeta = 0;
-	Matrix Z(nreg,1); Z = 1; // simplest case here 
+	Matrix Betabar(nreg, nvar); Betabar = 0.f;
+	Matrix Abeta(nvar,nvar); Abeta = 0.f;
+	Matrix Z(nreg,1); Z = 1.f; // simplest case here 
 	int nz = Z.ncols();
-	Matrix Delta(nz,nvar); Delta = 0.; // to be updated 
-	Matrix Deltabar(nz,nvar); Deltabar = 0.; // always zero (in all iterations)  in my  examples
+	Matrix Delta(nz,nvar); Delta = 0.f; // to be updated 
+	Matrix Deltabar(nz,nvar); Deltabar = 0.f; // always zero (in all iterations)  in my  examples
 	DiagonalMatrix Da(nz);
- 	Da=0.01;
-	SymmetricMatrix A(nz); A = 0;
+ 	Da=0.01f;
+	SymmetricMatrix A(nz); A = 0.f;
 	A.inject(Da);
 
 	DiagonalMatrix Dv(nvar);
 	Dv = nu;
-	SymmetricMatrix V(nvar); V = 0;
+	SymmetricMatrix V(nvar); V = 0.f;
 	V.inject(Dv);
 //	
-	Real* betabar;
-	Real* abeta;
+	float* betabar;
+	float* abeta;
 //
 	Matrix Y0( nreg,nobs); // !!!  transposed dim : R column order 
 	Y0 << y;
 	Matrix Y = Y0.t(); // use row order
 //
   ColumnVector yi;
-	Real ivar;
-	Real tau[nreg];
-	Real ssq[nreg];
+	float ivar;
+	float tau[nreg];
+	float ssq[nreg];
 	for(int i=0; i < nreg; i++) {
     yi = Y.column(i+1);
 		varnr(yi.data(), nobs, &ivar); 
@@ -135,15 +138,13 @@ void cudaMultireg(float* y, float* X, int* pnue, int* pnreg, int* pnobs, int* pn
 	dim3 dGrid = nblocks; 
 	dim3 dBlock = nthreads;
 	//--------------------------------------------------------------------
-#ifdef TIMER
 	printf("n. of required threads = %d\n",(*pnreg)); 
 	printf("dGrid = %d \t dBlock = %d \n", nblocks, nthreads);
+#ifdef TIMER
 	// create and start timer
-
 	unsigned int timer = 0;
 	cutilCheckError(cutCreateTimer(&timer));
-	cutilCheckError(cutStartTimer(timer));
-#endif 
+#endif
 	//--------------------------------------------------------------------
 	// memcopy to constant memory
 	unsigned int mem_size_xregdim = sizeof(float) * nobs * nvar;
@@ -177,24 +178,29 @@ void cudaMultireg(float* y, float* X, int* pnue, int* pnreg, int* pnobs, int* pn
 	unsigned int mem_size_ydim = sizeof(float) * nobs * nreg;
 	cutilSafeCall(cudaMemcpy(d_y, y, mem_size_ydim, cudaMemcpyHostToDevice) );
 
+	// copy once
+	cutilSafeCall(cudaMemcpy(d_tau, tau, mem_size_taudim, cudaMemcpyHostToDevice) );
+
 	// -------------------------------
 	// MCMC simulation
 	//
 	cout << "Processing " << R << " iterations:\t '.' = 100 iterations" << endl; 
+
+#ifdef TIMER
+	cutilCheckError(cutStartTimer(timer));
+#endif
 	
 	for(int rep=1; rep <= R; rep++) {
 	
-		Abeta = chol2inv(Vbeta);
-		abeta = Abeta.data();
-		Betabar = Z * Delta;
-		betabar = Betabar.data();
-	
+		Abeta = chol2inv(Vbeta); abeta = Abeta.data();
+		Betabar = Z * Delta; betabar = Betabar.data();
+
 		// -------------------------------
 		// copy host memory to device at each iteration
 	
-		cutilSafeCall(cudaMemcpy(d_betabar, betabar, mem_size_betadim, cudaMemcpyHostToDevice) );
-		cutilSafeCall(cudaMemcpy(d_tau, tau, mem_size_taudim, cudaMemcpyHostToDevice) );
-	  cutilSafeCall( cudaMemcpyToSymbol( d_Abeta, abeta, mem_size_mdim) );
+  	cutilSafeCall(cudaMemcpy(d_betabar, betabar, mem_size_betadim, cudaMemcpyHostToDevice) );
+
+	  cutilSafeCall(cudaMemcpyToSymbol(d_Abeta, abeta, mem_size_mdim) );
 	
 		// -------------------------------
 		// Run regression kernel
@@ -202,32 +208,30 @@ void cudaMultireg(float* y, float* X, int* pnue, int* pnreg, int* pnobs, int* pn
 		seed = rand();
 		// printf("kernel seed = %d\n", seed);
 	
-		cudaruniregNRK<<< dGrid, dBlock >>>(d_betabar, d_tau, d_y, nu, nreg, nobs, nvar, seed);
-	
+		cudaruniregNRK<<< dGrid, dBlock >>>(d_betabar, d_tau, d_y, nue, nreg, nobs, nvar, seed);
+
 		// check if kernel execution generated and error
 		cutilCheckMsg("Kernel execution failed");
 
 		// -------------------------------
 		// Update values : betadraw , tau
 		// copy betadraw from device to host
-	
+
 		cutilSafeCall(cudaMemcpy(betabar, d_betabar, mem_size_betadim, cudaMemcpyDeviceToHost) );
-		// copy tau/sigmasqdraw from device to host
-		cutilSafeCall(cudaMemcpy(tau, d_tau, mem_size_taudim, cudaMemcpyDeviceToHost) );
-	
-		Betabar << betabar; 
-	
+
 		// -------------------------------
 		// Apply rmultireg
 		// Returned Values : Delta , Vbeta
-	
+
 	 	rmultireg(Betabar,Z,Deltabar,A,nu,V, &Delta, &Vbeta); // Delta <-> B ; Vbeta <-> Sigma
 	
 		// -------------------------------
 		// keep MCMC draws
 	
 	  if(rep%keep == 0) { 
-			// cout << "\n*\n";
+			// copy tau/sigmasqdraw from device to host
+			cutilSafeCall(cudaMemcpy(tau, d_tau, mem_size_taudim, cudaMemcpyDeviceToHost) );
+
 	  	mkeep=rep/keep;
 			// Symmetric values = do not transpose;  dimVbetadraw = nvar*nvar;
 			Vaux.inject(Vbeta); //!!! required due to SymmetricMatrix storage scheme.
@@ -256,13 +260,14 @@ void cudaMultireg(float* y, float* X, int* pnue, int* pnreg, int* pnobs, int* pn
 			cout.flush() << ".";
 	
 	}
-	
+
 	cout << endl;
 
 	// -------------------------------
 
 #ifdef TIMER
 	// stop and destroy timer
+  cutilSafeCall( cudaThreadSynchronize() );
 	cutilCheckError(cutStopTimer(timer));
 	printf("Processing time: %f (ms) \n", cutGetTimerValue(timer));
 	cutilCheckError(cutDeleteTimer(timer));

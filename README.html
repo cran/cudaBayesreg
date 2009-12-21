@@ -5,33 +5,32 @@
 	<TITLE></TITLE>
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.1  (Unix)">
 	<META NAME="CREATED" CONTENT="0;0">
-	<META NAME="CHANGED" CONTENT="20091019;13544400">
+	<META NAME="CHANGEDBY" CONTENT="Adelino ">
+	<META NAME="CHANGED" CONTENT="20091221;9233700">
 	<META NAME="" CONTENT="">
 </HEAD>
 <BODY LANG="en-US" DIR="LTR">
-<P><BR><BR>
-</P>
 <P><B>Installation Notes and Requirements:</B></P>
 <P>To use the <B>cudaBayesreg</B> package on your system you need the
 following installed:</P>
-<UL>
+<OL>
 	<LI><P>CUDA-capable GPU</P>
-	<LI><P>CUDA software, which includes the <B>nvcc</B> (release 2.3)
-	NVIDIA Cuda Compiler driver (available at no cost from
+	<LI><P>CUDA software, which includes the <B>nvcc</B> (release
+	3.0-beta1) NVIDIA Cuda Compiler driver (available at no cost from
 	<A HREF="http://www.nvidia.com/cuda">http://www.nvidia.com/cuda</A>)</P>
 	<LI><P STYLE="font-weight: normal">A supported version of Linux with
-	compiler gcc and g++  versions 3.4; (nvcc is currently not fully
-	compatible with gcc v. 4.4).</P>
-</UL>
+	g++ GNU compiler;  (gcc/g++ version 3.4 or 4.3 is required, since
+	nvcc is currently not fully compatible with gcc v. 4.4).</P>
+</OL>
 <P><B>Notes</B>:</P>
 <OL>
 	<LI><P>A general purpose C compiler is needed by nvcc. On Linux
 	platforms, the compiler is assumed to be ‘gcc’ , or ‘g++’
-	for linking. O. In order to use <B>gcc version 3.4</B>, rename it
-	gcc34, and make a link in directory “/tmp” to it, e.g. “ln -s
-	/usr/bin/gcc34 gcc”. The package's Makefiles expects this
-	configuration to be in place (it uses the nvcc flag “-ccbin
-	/tmp”).</P>
+	for linking. In order to use <B>gcc version 3.4,</B><SPAN STYLE="font-weight: normal">
+	for instance, </SPAN>rename it gcc34, and make a link in directory
+	“<B>/tmp</B>” to it, e.g. “ln -s /usr/bin/gcc34 gcc”. The
+	package's Makefiles expects this configuration to be in place (it
+	uses the nvcc flag “<B>-ccbin /tmp</B>”).</P>
 	<LI><P>In some Linux distributions (e.g. Fedora), to install “gcc34”
 	and “g++34” you just need to install the GNU compatibility
 	packages “compat-gcc-34” and “compat-gcc-34-c++”.</P>

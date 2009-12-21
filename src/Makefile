@@ -4,7 +4,7 @@ MAKE=make
 
 ifeq (TRUE,TRUE)
   NVCC=/usr/local/cuda//bin/nvcc
-  NVCCFLAGS = --compiler-bindir /tmp  -Xcompiler "-fPIC" -Xlinker "-fPIC" -I/usr/local/cuda//include -I./cutil -I./newmat11 -I/usr/include/R 
+  NVCCFLAGS = --compiler-bindir /tmp --compiler-options -fno-strict-aliasing -Xcompiler "-fPIC" -Xlinker "-fPIC" -I/usr/local/cuda//include -I./cutil -I./newmat11 -I/usr/include/R 
   NVCCLINKS = -shared -Xcompiler "-fPIC" -Xlinker "-fPIC" -L/usr/lib64/R/lib -lR -L/usr/lib64/R -lRmath -lcuda -L./cutil -lcutil -L./newmat11 -lnewmat 
 endif
 

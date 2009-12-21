@@ -31,7 +31,7 @@ function (pmeans, vreg, plot = T)
     pm2.nact <- pm2[spmn]
     h1 <- 0.5 * max(pm2.dens$y)
     if (plot) {
-        x11(width = 7, height = 7)
+        # x11(width = 7, height = 7)
         hist(pm2, prob = T, breaks = 15, col = "lightgray", xlab = paste("beta-", 
             vreg, sep = ""), main="Histogram of posterior mean values")
         lines(pm2.dens)

@@ -25,7 +25,7 @@ cudaMultireg.slice(slicedata, R, keep = 5, nu.e = 3, savesim = T,
 \details{
 	The statistical model implemented in CUDA was specified as a Gibbs Sampler for hierarchical linear models with a normal prior (see references below).
 	The main computational work is done in parallel on a CUDA capable GPU. Each thread is responsible for fitting a general linear model at each voxel.
-	The CUDA implementation has the following system requirements: nvcc (release 2.3) NVIDIA Cuda Compiler driver, g++ GNU compiler version 3.4 (version 4.4 is not yet compatible with nvcc). The package includes source code files to build the libraries "libcutil.so" and "newmat11.so". The first, is a shared version of the utility library used by the NVIDIA GPU Computing SDK software (see cudaBayesreg/src/Makefile for configuration). The second, is a matrix library by R. B. Davies used by the package's host C++ code.}
+	The CUDA implementation has the following system requirements: nvcc NVIDIA Cuda Compiler driver, g++ GNU compiler (nvcc compatible version). The package includes source code files to build the libraries "libcutil.so" and "newmat11.so". The first, is a shared version of the utility library used by the NVIDIA GPU Computing SDK software (see cudaBayesreg/src/Makefile for configuration). The second, is a matrix library by R. B. Davies used by the package's host C++ code.}
 \value{
   a list containing
   \item{betadraw}{nreg x nvar x R/keep array of individual regression coef draws}
