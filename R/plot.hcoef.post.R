@@ -1,7 +1,11 @@
 # plot arrays of draws of coefs in hier models
 #	3 dimensional arrays:		unit x var x draw
 # Original code by P. Rossi 2/07
-#	Modified by A. Ferreira da Silva
+#
+# S3 method to plot arrays of draws of coefs in hier models
+#   3 dimensional arrays:  unit x var x draw
+# P. Rossi 2/07
+#	Modified for cudaBayesreg by A. Ferreira da Silva
 #
 plot.hcoef.post <-
 function (x, spmname, spm, burnin = trunc(0.1 * R), ...) 

@@ -1,4 +1,4 @@
-AC_INIT([cudaBayesreg], 0.2-1)
+AC_INIT([cudaBayesreg], 0.3-2)
 
 : ${R_HOME=`R RHOME`}
 if test -z "${R_HOME}"; then
@@ -24,8 +24,8 @@ if test -z "${NVCC_CC_VERSION}"; then
 fi
 
 case ${NVCC_CC_VERSION} in
-  4.*)
-AC_MSG_ERROR([gcc compiler version 3.4 is required for nvcc compilation in cudaBayesreg. Please see the README.html file for installation requirements])
+  4.4*)
+AC_MSG_ERROR([a compatible gcc/g++ compiler version is required for nvcc compilation in cudaBayesreg. Please see the README.html file for installation requirements])
 ;;
 esac
 

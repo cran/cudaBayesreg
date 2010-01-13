@@ -1,0 +1,48 @@
+#
+# read segmented images to build Z array
+# Z prior as csf/gry/wht segmented regions 
+#	Extensions for segmented masks as in *_csf.nii.gz, etc.
+#
+read.Zsegslice <-
+function(slicedata, ymaskdata)
+{
+	fbase <- slicedata$fbase
+	slice <- slicedata$slice
+  fsl.csf <- system.file(paste("data/",fbase,"_csf.nii.gz",sep=""),
+		package = "cudaBayesreg")
+  fsl.gry <- system.file(paste("data/",fbase,"_gry.nii.gz",sep=""),
+		package = "cudaBayesreg")
+  fsl.wht <- system.file(paste("data/",fbase,"_wht.nii.gz",sep=""),
+		package = "cudaBayesreg")
+	csfm <- read.img(fsl.csf)
+	grym <- read.img(fsl.gry)
+	whtm <- read.img(fsl.wht)
+	nx <- nrow(csfm)
+	swap <- slicedata$swap
+  if(swap) { # read Z-mask slice data consistent with slicedata
+		csf.sl <- csfm[nx:1,,slice,]
+		gry.sl <- grym[nx:1,,slice,]
+		wht.sl <- whtm[nx:1,,slice,]
+	} else {
+		csf.sl <- csfm[,,slice,]
+		gry.sl <- grym[,,slice,]
+		wht.sl <- whtm[,,slice,]
+	}
+	#----------------
+	kin <- ymaskdata$kin
+	nreg <- ymaskdata$nreg
+	d <- dim(kin) 
+	zmat <- matrix(0,nrow=nreg,ncol=3)
+	for(i in 1:d[1]) {
+		c0 <- csf.sl[kin[i,1],kin[i,2]]
+		zmat[i,1] <- c0
+		c0 <- gry.sl[kin[i,1],kin[i,2]]
+		zmat[i,2] <- c0
+		c0 <- wht.sl[kin[i,1],kin[i,2]]
+		zmat[i,3] <- c0
+	}
+	demean <- function(x) { x-mean(x); }
+	zmat <- apply(zmat,2,demean)
+	Z <- cbind(c(rep(1,nreg)), zmat)
+	invisible(Z)
+}

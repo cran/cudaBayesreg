@@ -1,48 +1,54 @@
 \name{post.ppm}
 \alias{post.ppm}
 \concept{PPM Image}
-\title{Posterior Probability Map (PPM) Image}
+\title{Posterior Probability Map (PPM) image}
 \description{
   \code{post.ppm} 
-	depicts the PPM image of voxel activations in a slice.}
-\usage{post.ppm(out, slicedata, vreg = 2, swap = F, plot=T)}
+	computes the PPM image of voxel activations in a slice.}
+\usage{post.ppm(out, slicedata, ymaskdata, vreg = 2, swap = FALSE, plot=TRUE)}
 \arguments{
   \item{out}{output of MCMC simulation}
-  \item{slicedata}{input slicedata used in simulation.}
-  \item{vreg}{regression variable to represent in PPM; default(vreg=2).}
-  \item{swap}{image in radiological convention (default FALSE).}
-  \item{plot}{show ppm images (with overlay) ?: (default TRUE).}}
+  \item{slicedata}{list(slice=slice, niislicets=niislicets, mask=mask, dsgn=dsgn);
+		input slice data used in simulation as returned by \code{read.fmrislice}}
+  \item{ymaskdata}{list(yn = yn, kin = kin, nreg = nreg);
+		masked and standardized slice data as returned by \code{premask}}
+  \item{vreg}{regression variable to represent in PPM; default(vreg=2)}
+  \item{swap}{image in radiological convention (default FALSE)}
+  \item{plot}{show ppm images (with overlay) ?: (default TRUE)}}
 \details{
-Use the MCMC draws to estimate the Posterior Probability Map (PPM) Image.
+Use the MCMC draws to estimate the Posterior Probability Map (PPM) image.
 The number of regression variables used in the simulation is equal to the number of columns specified in the design matrix, plus an intercept term; vreg=1 represents the intercept term in regression.}
 \value{
   a list containing
   \item{ppm}{ppm image as matrix}
   \item{nactive}{n. of active voxels}}
 \references{
-Adelino R. Ferreira da Silva "A Bayesian Multilevel Model for fMRI Data Analysis", to be published.}
+Adelino R. Ferreira da Silva \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, to be published.}
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,
 	Faculdade de Ciencias e Tecnologia,\cr
 	\email{afs@fct.unl.pt}.}
 \seealso{
-  \code{\link{cudaMultireg.slice}}
-  \code{\link{regpostsim}}
-  \code{\link{post.simul.hist}}
-  \code{\link{post.tseries}}}
+  \code{\link{cudaMultireg.slice}},
+  \code{\link{regpostsim}},
+  \code{\link{post.simul.hist}},
+  \code{\link{post.tseries}}
+}
 \examples{
 \dontrun{
-slicedata <- read.fmrisample(slice=3)
-fsave <- "/tmp/simultest.sav"
+slicedata <- read.fmrislice(fbase="fmri", slice=3, swap=TRUE)
+ymaskdata <- premask(slicedata)
+fsave <- "/tmp/simultest1.sav"
 answ <- readline("Run MCMC simulation first ? ")
 run <- FALSE
 if (substr(answ, 1, 1) == "y") { run <- TRUE }
 if(run) {
-	out <- cudaMultireg.slice(slicedata, fsave=fsave )
+	out <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=3, fsave=fsave,
+   	zprior=FALSE)
 } else {
 	load(file=fsave)
 	cat("loaded",fsave,"\n")
 }
-post.ppm(out=out, slicedata=slicedata, vreg=2)
-post.ppm(out=out, slicedata=slicedata, vreg=4)
+post.ppm(out=out, slicedata=slicedata, ymaskdata=ymaskdata, vreg=2)
+post.ppm(out=out, slicedata=slicedata, ymaskdata=ymaskdata, vreg=4)
 }}
 \keyword{dplot}

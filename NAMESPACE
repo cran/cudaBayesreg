@@ -4,9 +4,13 @@ export(
 	premask,
 	plot.hcoef.post,
 	pmeans.hcoef,
+	read.fmrislice,
+	read.Zsegslice,
+	regpostsim,
 	post.ppm,
 	post.simul.betadraw,
 	post.simul.hist,
 	post.tseries,
-	read.fmrisample,
-	regpostsim)
+	post.shrinkage.mean,
+	post.shrinkage.minmax,
+	post.randeff)

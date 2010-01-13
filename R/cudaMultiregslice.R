@@ -1,27 +1,21 @@
 cudaMultireg.slice <-
-function (slicedata, R = 3000, keep = 5, nu.e = 3, 
-    savesim = T, fsave = "/tmp/simultest.sav") 
+function (slicedata, ymaskdata, R = 3000, keep = 5, nu.e = 3, fsave = NA, zprior = FALSE) 
 {
-    # Mask out slice times series
-    ymask <- premask(slicedata)
-    ym <- ymask$ym
-    kin <- ymask$kin
-    stdf <- function(y) {
-        return((y - mean(y))/sd(y))
-    }
-    yn <- apply(ym, 2, stdf) # use standardization 
-    dsgn <- slicedata$dsgn
-    nrcoefs <- ncol(dsgn)
-    nobs <- nrow(ym)
-    X0 <- as.matrix(dsgn) # fsl design matrix from fsl 
-    X <- cbind(rep(1, nobs), X0[, 1:nrcoefs])
-    nvar <- nrcoefs + 1
-    nreg <- ncol(ym)
-    nobs <- nrow(ym)
+    X <- slicedata$X
+    nvar <- slicedata$nvar
+    nobs <- slicedata$nobs
+    yn <- ymaskdata$yn # y data, masked and standardized
+    nreg <- ymaskdata$nreg
+    stopifnot(nobs == nrow(yn))
     #-----------------------------
-    #  Mcmc regression stuff
-    #  allocate space for the draws and set initial values of Vbeta and Delta
-    nz <- 1
+    # Mcmc regression stuff
+    if (!zprior) # Default prior for Z: simplest case
+        Z <- matrix(rep(1, nreg), ncol = 1)
+    else  # Z prior as CSF/GRY/WHT segmented regions
+		    Z <- read.Zsegslice(slicedata = slicedata, ymaskdata = ymaskdata)
+    nz <- ncol(Z)
+    # Allocate space for the draws and set initial values of Vbeta and Delta
+    Deltabar <- matrix(0, nz, nvar)
     Vbetadraw = matrix(double(floor(R/keep) * nvar * nvar), ncol = nvar * 
         nvar)
     Deltadraw = matrix(double(floor(R/keep) * nz * nvar), ncol = nz * 
@@ -29,31 +23,36 @@ function (slicedata, R = 3000, keep = 5, nu.e = 3,
     taudraw = matrix(double(floor(R/keep) * nreg), ncol = nreg)
     betadraw = array(double(floor(R/keep) * nreg * nvar), dim = c(nreg, 
         nvar, floor(R/keep)))
-    runif(1)  # initialize RNG
+    #-----------------------------
+    runif(1)
     cat("\nBegin of Cuda call \n")
     outcuda <- .C("cudaMultireg", as.single(yn), as.single(X), 
-        as.integer(nu.e), as.integer(nreg), as.integer(nobs), 
-        as.integer(nvar), as.integer(R), as.integer(keep), Vbetadraw = as.single(Vbetadraw), 
+        as.single(Z), as.single(Deltabar), as.integer(nz), as.integer(nu.e), 
+        as.integer(nreg), as.integer(nobs), as.integer(nvar), 
+        as.integer(R), as.integer(keep), Vbetadraw = as.single(Vbetadraw), 
         Deltadraw = as.single(Deltadraw), betadraw = as.single(betadraw), 
         taudraw = as.single(taudraw))
     cat("\nEND of Cuda call \n")
+    #-----------------------------
     Vbetadraw <- matrix(outcuda$Vbetadraw, ncol = nvar * nvar, 
         byrow = T)
     Deltadraw <- matrix(outcuda$Deltadraw, ncol = nz * nvar, 
         byrow = T)
     betadraw <- array(outcuda$betadraw, dim = c(nreg, nvar, floor(R/keep)))
     taudraw <- matrix(outcuda$taudraw, ncol = nreg, byrow = T)
-    attributes(Vbetadraw)$class = c("cudabayesreg.var", "cudabayesreg.mat", 
+    #-----------------------------
+		# Apply "bayesm" methods used for summary compatibility purposes
+    attributes(taudraw)$class = c("bayesm.mat", "mcmc")
+    attributes(taudraw)$mcpar = c(1, R, keep)
+    attributes(Deltadraw)$class = c("bayesm.mat", "mcmc")
+    attributes(Deltadraw)$mcpar = c(1, R, keep)
+    attributes(Vbetadraw)$class = c("bayesm.var", "bayesm.mat", 
         "mcmc")
-    # attributes(Deltadraw)$class = c("cudabayesreg.mat", "mcmc")
-    # attributes(betadraw)$class = c("cudabayesreg.hcoef")
-    # attributes(taudraw)$class = c("cudabayesreg.mat", "mcmc")
-    # attributes(taudraw)$mcpar = c(1, R, keep)
-    # attributes(Deltadraw)$mcpar = c(1, R, keep)
-    # attributes(Vbetadraw)$mcpar = c(1, R, keep)
+    attributes(Vbetadraw)$mcpar = c(1, R, keep)
+    attributes(betadraw)$class = c("hcoef.post") # attributes for new plot method 
     out <- list(Vbetadraw = Vbetadraw, Deltadraw = Deltadraw, 
         betadraw = betadraw, taudraw = taudraw)
-    if (savesim) {
+    if(!is.na(fsave)) {
         cat("saving simulation ", fsave, "...")
         save(out, file = fsave)
         cat("\n")

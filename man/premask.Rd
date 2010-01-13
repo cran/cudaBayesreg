@@ -10,26 +10,32 @@
 \arguments{
   \item{slicedata}{list(slicedata).}}
 \details{
-Mask out fMRI nifti data as read by cudaBayesreg::read.fmrisample(slice).
-Pixels with constant time series are masked out.}
+	Mask out fMRI nifti data as read by cudaBayesreg::read.fmrislice(slice).
+	Pixels with constant time series are masked out.
+}
 \value{
   a list containing
-  \item{ym}{pixel values to retain}
-  \item{kin}{indices of voxels in mask}}
+  \item{yn}{voxels values}
+  \item{kin}{indices of voxels in mask}
+  \item{nreg}{number of regressions}
+}
 \references{
-package="AnalyzeFMRI",\cr
-FSL/FEAT Analysis tool, FMRIB Software Library (FSL) (\url{www.fmrib.ox.ac.uk/fsl})}
+	package \pkg{dcemri},\cr
+
+	FSL/FEAT Analysis tool, FMRIB Software Library (FSL) (\url{www.fmrib.ox.ac.uk/fsl})
+}
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,
 	Faculdade de Ciencias e Tecnologia,\cr
-	\email{afs@fct.unl.pt}.}
+	\email{afs@fct.unl.pt}.
+}
 \seealso{
-  \code{\link{cudaMultireg.slice}}
-  \code{\link{read.fmrisample}}}
+  \code{\link{cudaMultireg.slice}},
+  \code{\link{read.fmrislice}}
+}
 \examples{
 \dontrun{
-slicedata <- read.fmrisample(slice=3)
-ymask <- premask(slicedata)
-print(str(ymask))
-}
-}
+slicedata <- read.fmrislice(slice=3)
+ymaskdata <- premask(slicedata)
+print(str(ymaskdata))
+}}
 \keyword{utilities}

@@ -3,26 +3,14 @@
 # Example of fitted time series of most active voxel 
 #
 post.tseries <-
-function(out, slicedata, vreg=2)
+function(out, slicedata, ymaskdata, vreg=2)
 {
-    # Mask out slice times series
-    ymask <- premask(slicedata)
-    ym <- ymask$ym; kin <- ymask$kin
-    # use normalization
-    # normalize <- function(y) {return ((y-min(y)) / (max(y)- min(y))) } # normalize data
-    # yn <- apply(ym, 2, normalize) # normalize 
-    # use standardization
-    stdf <- function(y) {return ((y - mean(y) )/sd(y))} 
-    yn <- apply(ym, 2, stdf) # use standardization
-    #-----------
-    dsgn <- slicedata$dsgn
-    nrcoefs <- ncol(dsgn)
-    nobs <- nrow(ym)
-    X0 <- as.matrix(dsgn) # fsl design matrix from fsl
-    X <- cbind(rep(1,nobs), X0[,1:nrcoefs]) #  nrcoefs: number of regression coeffs to use
-    nvar <- nrcoefs + 1
-    nreg <- ncol(ym)
-    nobs <- nrow(ym)
+    X <- slicedata$X
+		nvar <- slicedata$nvar 
+		nobs <- slicedata$nobs 
+    yn <- ymaskdata$yn
+    nreg <- ymaskdata$nreg
+    stopifnot(nobs == nrow(yn))
     #-----------------------------
     # Postprocessing 
     pmeans = pmeans.hcoef(out$betadraw) 

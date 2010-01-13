@@ -19,7 +19,7 @@ pmeans.hcoef=function(x,burnin=trunc(.1*R))
     pmeans=matrix(0,nrow=nunits,ncol=nvar)
     for(i in 1:nunits) pmeans[i,]=apply(X[i,,(burnin+1):R],1,mean)
     names=as.character(1:nvar)
-    # attributes(pmeans)$class="cudabayesreg.mat"
+    attributes(pmeans)$class="hcoef.post"
     for(i in 1:nvar) names[i]=paste("Posterior Means of Coef ",i,sep="")
     return(pmeans)
 }

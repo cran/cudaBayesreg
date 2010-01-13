@@ -1,13 +1,11 @@
 
 post.ppm <-
-function(out, slicedata, vreg = 2, swap = F, plot = T)
+function(out, slicedata, ymaskdata, vreg = 2, swap = FALSE, plot = TRUE)
 {
-    x11(width=4,height=4.5)
-    op <- par(no.readonly = TRUE)
-    on.exit(par(op))
-    # Mask out slice times series
-    ymask <- premask(slicedata)
-    kin <- ymask$kin
+    # exitpar <- par(no.readonly=T) 
+    # par(mfrow=c(1,2))
+    # x11(width=8,height=4.5)
+    kin <- ymaskdata$kin # indices of masked out slice times series
     #-----------
     niislicets <- slicedata$niislicets
     niislicets <- niislicets[,,1] # ! radiological convention 
@@ -16,13 +14,13 @@ function(out, slicedata, vreg = 2, swap = F, plot = T)
     mask <- slicedata$mask
     dm <- dim(mask)
     # cat("mask ",dm,"\n")
-    if(plot) { # initial pre-filtered image
-        #x11(width=4,height=4.5)
-        par(mar=c(0,0,2,0), xaxt="n", yaxt="n", ask=T)
-        image(niislicets, col=heat.colors(256), main="initial pre-filtered image",
-                  axes=F)
-        # image(niislicets[,,1], col=gray((0:255)/256))
-		}
+#    if(plot) { # initial pre-filtered image
+#        # x11(width=4,height=4.5)
+#        par(mar=c(0,0,2,0), xaxt="n", yaxt="n", ask=F)
+#        image(niislicets, col=heat.colors(256), main="initial pre-filtered image",
+#                  axes=F)
+#        # image(niislicets[,,1], col=gray((0:255)/256))
+#		}
     #-------------------
     pmeans = pmeans.hcoef(out$betadraw) 
     px <- regpostsim(pmeans, vreg=vreg, plot=F)
@@ -57,11 +55,12 @@ function(out, slicedata, vreg = 2, swap = F, plot = T)
         ppm.m <- ppm.m[dm[1]:1, ] # ! radiological convention 
     if(plot) {
         # x11(width=4,height=4.5)
-        par(mar=c(0,0,2,0), xaxt="n", yaxt="n", ask=T)
+        par(mar=c(0,0,2,0), xaxt="n", yaxt="n", ask=F)
     		main <- paste("ppm image ; vreg = ",vreg,sep="") 
         image(ppm.m, col=heat.colors(256), main=main, axes=F)
         # image(ppm.m, col=gray((0:255)/256), main="ppm image", axes=F)
     }
+		# par(exitpar)
 		invisible(list(ppm=ppm, nactive=nactive))
 }
 

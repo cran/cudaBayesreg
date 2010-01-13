@@ -1,7 +1,6 @@
 #
 # Mask out slice times series and keep indices
 #
-
 premask <-
 function (slicedata) 
 {
@@ -25,5 +24,11 @@ function (slicedata)
         }
     }
     kin <- which(mask == 1, arr.ind = T)  # update indices of pixels in mask
-    invisible(list(ym = ym, kin = kin))
+		###
+    stdf <- function(y) { return((y - mean(y))/sd(y)); }
+    yn <- apply(ym, 2, stdf)
+    nobs <- slicedata$nobs
+    stopifnot(nobs == nrow(yn))
+    nreg <- ncol(yn)
+    invisible(list(yn = yn, kin = kin, nreg = nreg))
 }
