@@ -34,7 +34,7 @@
 }
 \examples{
 \dontrun{
-slicedata <- read.fmrislice(slice=3)
+slicedata <- read.fmrislice(fbase="fmri", slice=3)
 ymaskdata <- premask(slicedata)
 print(str(ymaskdata))
 }}

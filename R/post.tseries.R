@@ -13,7 +13,7 @@ function(out, slicedata, ymaskdata, vreg=2)
     stopifnot(nobs == nrow(yn))
     #-----------------------------
     # Postprocessing 
-    pmeans = pmeans.hcoef(out$betadraw) 
+    pmeans <- pmeans.hcoef(out$betadraw) 
     px <- regpostsim(pmeans, vreg=vreg, plot=F)
     pm2 <- pmeans[,vreg]
     spma <- px$spma

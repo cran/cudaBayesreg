@@ -94,10 +94,9 @@ cudaruniregNRK(float* d_betabar, float* tau, float* y, int nu, int nreg, int nob
 
 	//	__syncthreads();
 
-	int ix;
+	int ix=ti*m;
 	for(int i=0; i < m; i++) {
-		ix = ti*m+i;
-		d_betabar[ix] = beta[i];
+		d_betabar[ix+i] = beta[i];
 	}
 
 }

@@ -44,7 +44,7 @@ Faculdade de Ciencias e Tecnologia,\cr \email{afs@fct.unl.pt}.
   \code{\link{premask}}}
 \examples{
 \dontrun{
-slicedata <- read.fmrislice(slice=3)
+slicedata <- read.fmrislice(fbase="fmri", slice=3)
 print(str(slicedata))
 }}
 

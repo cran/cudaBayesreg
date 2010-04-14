@@ -18,7 +18,8 @@ using namespace NEWMAT;							// access NEWMAT namespace
 
 // includes, project
 #include <cutil_inline.h>
-#define BLOCK 64		// specify CUDA block size
+// #define BLOCK 64		// specify CUDA block size
+#define BLOCK 128		// specify CUDA block size
 #define XDIM 5			//  max number of reg. coeffs.
 #define MDIM XDIM*XDIM
 // #define OBSDIM 96 	// max length of time series obs.; must be >= nobs
@@ -59,6 +60,9 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
 	int keep = *pkeep; 
 	int seed;  // seed passed to the kernel
 	// int seed = 1234;
+ 	// Uint seed;
+	srand(rseed());
+	// srand(getpid());
 
 	if(nreg > REGDIM) { cout << "ERROR: REGDIM exceeded" ; return; } 
 	if(nobs > OBSDIM) { cout << "ERROR: OBSDIM exceeded" ; return; } 
@@ -182,6 +186,7 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
 	// -------------------------------
 	// MCMC simulation
 	//
+	cout << "Processing " << R << " iterations:\t '.' = 100 iterations" << endl; 
 
 #ifdef TIMER
 	// create and start timer

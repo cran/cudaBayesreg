@@ -1,4 +1,6 @@
-
+#include <climits>
+#include <cstdio>
+#include <ctime>
 #include <math.h>
 #include "d_nr3.h"
 
@@ -118,5 +120,53 @@ __device__ inline void d_rchisq(Gammadev* chi, int n, Doub* res)
 		res[i] = chi->dev();
 }
 
+
+Ulong hashseed( time_t t, clock_t c )
+{
+	// Get a Ulong from t and c
+	// Better than Ulong(x) in case x is floating point in [0,1]
+	// Based on code by Lawrence Kirby (fred@genesis.demon.co.uk)
+	
+	static Ulong differ = 0;  // guarantee time-based seeds will change
+	Ulong h1 = 0;
+	unsigned char *p = (unsigned char *) &t;
+	for( size_t i = 0; i < sizeof(t); ++i )
+	{
+		h1 *= UCHAR_MAX + 2U;
+		h1 += p[i];
+	}
+	Ulong h2 = 0;
+	p = (unsigned char *) &c;
+	for( size_t j = 0; j < sizeof(c); ++j )
+	{
+		h2 *= UCHAR_MAX + 2U;
+		h2 += p[j];
+	}
+	return ( h1 + differ++ ) ^ h2;
+}
+
+Ulong rseed()
+{
+	// Seed the generator with an array from /dev/urandom if available
+	// Otherwise use a hash of time() and clock() values
+	// First try getting an array from /dev/urandom
+	FILE* urandom = fopen( "/dev/urandom", "rb" );
+	if( urandom )
+	{
+		int N = 1;
+		Ulong bigSeed;
+		register Ulong *s = &bigSeed;
+		register int i = N;
+		register bool success = true;
+		while( success && i-- )
+			success = fread( s++, sizeof(Ulong), 1, urandom );
+		fclose(urandom);
+		if( success ) { // seed( bigSeed, N );
+			return bigSeed; }
+	}
+	// Was not successful, so use time() and clock() instead
+	// seed( hash( time(NULL), clock() ) );
+	return hashseed( time(NULL), clock() );
+}
 
 

@@ -1,6 +1,6 @@
 Package: cudaBayesreg
-Version: 0.3-2
-Date: 2010-01-13
+Version: 0.3-3
+Date: 2010-04-14
 Title: CUDA Parallel Implementation of a Bayesian Multilevel Model for
         fMRI Data Analysis
 Author: Adelino Ferreira da Silva <afs@fct.unl.pt>
@@ -30,5 +30,5 @@ Description: Compute Unified Device Architecture (CUDA) is a software
         card having Compute Capability 1.1 has been used in the tests.
 License: GPL (>= 2)
 Repository: CRAN
-Date/Publication: 2010-01-13 11:29:28
-Packaged: 2010-01-13 09:19:55 UTC; afs
+Date/Publication: 2010-04-16 16:04:00
+Packaged: 2010-04-16 14:47:43 UTC; afs

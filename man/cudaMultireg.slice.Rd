@@ -24,7 +24,7 @@ cudaMultireg.slice(slicedata, ymaskdata, R, keep = 5, nu.e = 3,
   \item{keep}{MCMC thinning parameter: keep every keepth draw (def: 5)}
   \item{nu.e}{d.f. parameter for regression error variance prior (def: 3)}
 	\item{fsave}{filename for saving the MCMC simulation (def: \samp{NULL} do not save)}
-	\item{zprior}{boolean \{T,F\}; default \{F\} - use just a mean for samp{Z}}
+	\item{zprior}{boolean \{T,F\}; default \{F\} - use just a mean for \samp{Z}}
 }
 \details{
 	The statistical model implemented in CUDA was specified as a Gibbs Sampler for hierarchical linear models with a normal prior.
@@ -34,7 +34,7 @@ cudaMultireg.slice(slicedata, ymaskdata, R, keep = 5, nu.e = 3,
 	The CUDA implementation has the following system requirements: nvcc NVIDIA Cuda Compiler driver, g++ GNU compiler (nvcc compatible version).
 	The package includes source code files to build the libraries \file{libcutil.so} and \file{newmat11.so}.
 	The former, is a shared version of the utility library used by the NVIDIA GPU Computing SDK software (see \file{cudaBayesreg/src/Makefile} for configuration).
-	The later, is a matrix library by R. B. Davies used by the package's host C++ code.}
+	The latter, is a matrix library by R. B. Davies used by the package's host C++ code.}
 \value{
   a list containing
   \item{betadraw}{nreg x nvar x R/keep array of individual regression coef draws}
