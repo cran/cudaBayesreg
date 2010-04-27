@@ -4,11 +4,11 @@ MAKE=make
 
 ifeq (@HAS_CUDA@,TRUE)
   NVCC=@CUDA_HOME@/bin/nvcc
-  NVCCFLAGS = --compiler-bindir @NVCC_CCBIN@ --compiler-options -fno-strict-aliasing -Xcompiler "-fPIC" -Xlinker "-fPIC" -I@CUDA_HOME@/include -I./cutil -I./newmat11 -I/usr/include/R 
-  NVCCLINKS = -shared -Xcompiler "-fPIC" -Xlinker "-fPIC" -L@R_HOME@/lib -lR -L@R_HOME@ -lRmath -lcuda -L./cutil -lcutil -L./newmat11 -lnewmat 
+  NVCCFLAGS = --compiler-bindir @NVCC_CCBIN@ --compiler-options -fno-strict-aliasing -Xcompiler "-fPIC" -Xlinker "-fPIC" -I@CUDA_HOME@/include -I./newmat11 -I/usr/include/R 
+  NVCCLINKS = -shared -Xcompiler "-fPIC" -Xlinker "-fPIC" -L@R_HOME@/lib -lR -L@R_HOME@ -lRmath -lcuda -L./newmat11 -lnewmat 
 endif
 
-CPPFLAGS = -shared -fPIC  -O2 -pipe -Wall -I@CUDA_HOME@/include -I./cutil -I./newmat11 -I/usr/include/R
+CPPFLAGS = -shared -fPIC  -O2 -pipe -Wall -I@CUDA_HOME@/include -I./newmat11 -I/usr/include/R
 
 DIFF = ./sdiff
 PRE = ./
@@ -22,7 +22,7 @@ MINOR = 0
 %.o:           	%.cpp
 		$(CXX) $(CPPFLAGS) -c $*.cpp
 
-TARGET : libnewmat.so libcutil.so cudaBayesreg.so
+TARGET : libnewmat.so cudaBayesreg.so
 
 cuda_obj = cudaMultireg.o 
 
@@ -31,9 +31,6 @@ utils_obj = utilsRmultireg.o utilsNewmat.o
 libnewmat.so:
 	( cd newmat11 ; $(MAKE) )
 
-libcutil.so: $(CUTILFILES)
-	( cd cutil ; $(MAKE) )
-
 cudaBayesreg.so: $(cuda_obj) $(utils_obj) 
 	$(NVCC) $(cuda_obj) $(utils_obj) $(NVCCLINKS) -o cudaBayesreg.so
 
@@ -41,7 +38,6 @@ all: $(TARGET)
 
 clean:
 	( rm -f *.o *.so ) 
-	( cd cutil ; $(MAKE) clean )
 	( cd newmat11 ; $(MAKE) clean )
 
 .PHONY: all clean

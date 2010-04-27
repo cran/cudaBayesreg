@@ -25,7 +25,7 @@ regpostsim(pmeans, vreg, plot=T)}
 }
 \examples{
 \dontrun{
-slicedata <- read.fmrislice(fbase="fmri", slice=3, swap=TRUE)
+slicedata <- read.fmrislice(fbase="fmri", slice=3, swap=FALSE)
 ymaskdata <- premask(slicedata)
 fsave <- "/tmp/simultest1.sav"
 answ <- readline("Run MCMC simulation first ? ")

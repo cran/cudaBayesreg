@@ -1,4 +1,4 @@
-CXX=g++ -m64 
+CXX=g++ 
 AR=ar
 
 # % CXXFLAGS = -O2 -Wall -shared -fPIC

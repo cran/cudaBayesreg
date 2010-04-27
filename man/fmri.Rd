@@ -15,11 +15,14 @@
 }
 \format{
 	The file \file{fmri.nii.gz} is in gzipped NIFTI format.
-	The R-package \pkg{dcemri} is required by \pkg{cudaBayesreg} to read NIFTI files.
+	The R-package \pkg{oro.nifti} is required by \pkg{cudaBayesreg} to read NIFTI files.
 }
 \references{
-	S.M. Smith et.al., \emph{Advances in functional and structural MR image analysis and implementation as FSL}. NeuroImage, 23(S1):208-219, 2004.\cr
+Brandon Whitcher, Volker Schmid and Andrew Thornton, Package \bold{oro.nifti}:
+ Rigorous - NIfTI Input / Output, 2010.
 
- \emph{FSL & FreeSurfer Course}, Oxford Centre for Functional Magnetic Resonance Imaging of the Brain (FMRIB), University of Oxford. (\url{www.fmrib.ox.ac.uk/fsl}).
+S.M. Smith et.al., \emph{Advances in functional and structural MR image analysis and implementation as FSL}. NeuroImage, 23(S1):208-219, 2004.
+
+\emph{FSL & FreeSurfer Course}, Oxford Centre for Functional Magnetic Resonance Imaging of the Brain (FMRIB), University of Oxford. (\url{www.fmrib.ox.ac.uk/fsl}).
 }
 \keyword{datasets}

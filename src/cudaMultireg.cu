@@ -16,8 +16,6 @@ using namespace NEWMAT;							// access NEWMAT namespace
 // #include "utilsNewmat.cc"
 // #include "utilsRmultireg.cc"
 
-// includes, project
-#include <cutil_inline.h>
 // #define BLOCK 64		// specify CUDA block size
 #define BLOCK 128		// specify CUDA block size
 #define XDIM 5			//  max number of reg. coeffs.
@@ -48,7 +46,7 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
 
 void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int* pnue, int* pnreg, int* pnobs, int* pnvar, int* pR, int* pkeep, float* pVbetadraw, float* pDeltadraw, float* pBetadraw, float* pTaudraw)
 {
-	cudaSetDevice( cutGetMaxGflopsDeviceId() );
+	// cudaSetDevice( cutGetMaxGflopsDeviceId() );
 	//--------------------------------------------------------------------
 	int nreg = (*pnreg);
 	int nobs = (*pnobs);
@@ -152,21 +150,22 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
 	unsigned int mem_size_xregdim = sizeof(float) * nobs * nvar;
 	unsigned int mem_size_mdim = sizeof(float) * nvar * nvar;
 	unsigned int mem_size_regdim = sizeof(float) * nreg;
-  cutilSafeCall( cudaMemcpyToSymbol( d_X, X, mem_size_xregdim) );
-  cutilSafeCall( cudaMemcpyToSymbol( d_XpX, pXpX, mem_size_mdim) );
-  cutilSafeCall( cudaMemcpyToSymbol( d_ssq, ssq, mem_size_regdim) );
+
+  cudaMemcpyToSymbol( d_X, X, mem_size_xregdim) ;
+  cudaMemcpyToSymbol( d_XpX, pXpX, mem_size_mdim) ;
+  cudaMemcpyToSymbol( d_ssq, ssq, mem_size_regdim) ;
 	//--------------------------------------------------------------------
 	// betabar/betadraw : allocate device memory
 	unsigned int size_BETABAR = XDIM * REGDIM;
 	unsigned int mem_size_BETADIM = sizeof(float) * size_BETABAR;
 	float* d_betabar;
-	cutilSafeCall(cudaMalloc((void**) &d_betabar, mem_size_BETADIM));
+	cudaMalloc((void**) &d_betabar, mem_size_BETADIM);
 	unsigned int mem_size_betadim = sizeof(float) * nvar * nreg;
 
 	// allocate device memory
 	float* d_tau;
 	unsigned int mem_size_TAUDIM = sizeof(float) * REGDIM;
-	cutilSafeCall(cudaMalloc((void**) &d_tau, mem_size_TAUDIM));
+	cudaMalloc((void**) &d_tau, mem_size_TAUDIM);
 
 	// copy host memory to device
 	unsigned int mem_size_taudim = sizeof(float) * nreg;
@@ -174,27 +173,20 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
 	// allocate device memory
 	unsigned int mem_size_YDIM = sizeof(float) * OBSDIM * REGDIM;
 	float* d_y;
-	cutilSafeCall(cudaMalloc((void**) &d_y, mem_size_YDIM));
+	cudaMalloc((void**) &d_y, mem_size_YDIM);
 
 	// copy host memory to device
 	unsigned int mem_size_ydim = sizeof(float) * nobs * nreg;
-	cutilSafeCall(cudaMemcpy(d_y, y, mem_size_ydim, cudaMemcpyHostToDevice) );
+	cudaMemcpy(d_y, y, mem_size_ydim, cudaMemcpyHostToDevice) ;
 
 	// MODX1: copy once
-	cutilSafeCall(cudaMemcpy(d_tau, tau, mem_size_taudim, cudaMemcpyHostToDevice) );
+	cudaMemcpy(d_tau, tau, mem_size_taudim, cudaMemcpyHostToDevice);
 
 	// -------------------------------
 	// MCMC simulation
 	//
 	cout << "Processing " << R << " iterations:\t '.' = 100 iterations" << endl; 
 
-#ifdef TIMER
-	// create and start timer
-	unsigned int timer = 0;
-	cutilCheckError(cutCreateTimer(&timer));
-	cutilCheckError(cutStartTimer(timer));
-#endif
-	
 	for(int rep=1; rep <= R; rep++) {
 
 		Abeta = chol2inv(Vbeta); abeta = Abeta.data();
@@ -203,9 +195,9 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
 		// -------------------------------
 		// copy host memory to device at each iteration
 	
-  	cutilSafeCall(cudaMemcpy(d_betabar, betabar, mem_size_betadim, cudaMemcpyHostToDevice) );
+  	cudaMemcpy(d_betabar, betabar, mem_size_betadim, cudaMemcpyHostToDevice);
 
-	  cutilSafeCall(cudaMemcpyToSymbol(d_Abeta, abeta, mem_size_mdim) );
+	  cudaMemcpyToSymbol(d_Abeta, abeta, mem_size_mdim);
 	
 		// -------------------------------
 		// Run regression kernel
@@ -213,20 +205,22 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
 		seed = rand();
 		// printf("kernel seed = %d\n", seed);
 	
-//    cutilSafeCall( cudaThreadSynchronize() );
+//   cudaThreadSynchronize() ;
 
 
 		cudaruniregNRK<<< dGrid, dBlock >>>(d_betabar, d_tau, d_y, nue, nreg, nobs, nvar, seed);
 
-
-		// check if kernel execution generated and error
-		cutilCheckMsg("Kernel execution failed");
+    cudaError_t err = cudaGetLastError();
+    if( cudaSuccess != err) {
+				cout << "CUDA Error: " << cudaGetErrorString(err) << endl; 
+        exit(-1);
+    }
 
 		// -------------------------------
 		// Update values : betadraw , tau
 		// copy betadraw from device to host
 
-		cutilSafeCall(cudaMemcpy(betabar, d_betabar, mem_size_betadim, cudaMemcpyDeviceToHost) );
+		cudaMemcpy(betabar, d_betabar, mem_size_betadim, cudaMemcpyDeviceToHost);
 
 
 		// -------------------------------
@@ -243,7 +237,7 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
 
 	  if(rep%keep == 0) { 
 			// copy tau/sigmasqdraw from device to host
-			cutilSafeCall(cudaMemcpy(tau, d_tau, mem_size_taudim, cudaMemcpyDeviceToHost) );
+			cudaMemcpy(tau, d_tau, mem_size_taudim, cudaMemcpyDeviceToHost);
 
 	  	mkeep=rep/keep;
 			// Symmetric values = do not transpose;  dimVbetadraw = nvar*nvar;
@@ -277,18 +271,10 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
 
 	cout << endl;
 	// -------------------------------
-#ifdef TIMER
-	// stop and destroy timer
-  cutilSafeCall( cudaThreadSynchronize() );
-	cutilCheckError(cutStopTimer(timer));
-	printf("Processing time: %f (ms) \n", cutGetTimerValue(timer));
-	cutilCheckError(cutDeleteTimer(timer));
-#endif
-	// -------------------------------
 	// clean up memory
-	cutilSafeCall(cudaFree(d_y));
-	cutilSafeCall(cudaFree(d_tau));
-	cutilSafeCall(cudaFree(d_betabar));
+	cudaFree(d_y);
+	cudaFree(d_tau);
+	cudaFree(d_betabar);
 
 	cudaThreadExit();
 

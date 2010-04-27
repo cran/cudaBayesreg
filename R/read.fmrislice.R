@@ -6,23 +6,25 @@
 #		nobs: n. of observations
 
 read.fmrislice <-
-function (fbase, slice, swap = TRUE) 
+function (fbase, slice, swap=FALSE) 
 {
     fsl.filtered <- system.file(paste("data/", fbase, "_filtered_func_data.nii.gz", 
         sep = ""), package = "cudaBayesreg")
     fsl.mask <- system.file(paste("data/", fbase, "_mask.nii.gz", 
         sep = ""), package = "cudaBayesreg")
-    img <- read.img(fsl.filtered)
-    mask <- read.img(fsl.mask)
+    img.nifti <- readNIfTI(fsl.filtered)
+    mask.nifti <- readNIfTI(fsl.mask)
+    img <- img.nifti@.Data
+    mask <- mask.nifti@.Data
     X <- nrow(img)
     Xm <- nrow(mask)
     if (swap) { # swap=T to be represented as in fslview
         niislicets <- img[X:1, , slice, ]
-        mask <- mask[Xm:1, , slice, ]
+        mask <- mask[Xm:1, , slice]
     }
     else {
         niislicets <- img[, , slice, ]
-        mask <- mask[, , slice, ]
+        mask <- mask[, , slice]
     }
     # Design matrix (FSL-like) 
     fsl.design <- system.file(paste("data/", fbase, "_design.txt", 

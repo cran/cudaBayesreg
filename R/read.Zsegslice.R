@@ -14,19 +14,22 @@ function(slicedata, ymaskdata)
 		package = "cudaBayesreg")
   fsl.wht <- system.file(paste("data/",fbase,"_wht.nii.gz",sep=""),
 		package = "cudaBayesreg")
-	csfm <- read.img(fsl.csf)
-	grym <- read.img(fsl.gry)
-	whtm <- read.img(fsl.wht)
+  csfm.nifti <- readNIfTI(fsl.csf)
+  csfm <- csfm.nifti@.Data
+	grym.nifti <- readNIfTI(fsl.gry)
+  grym <- grym.nifti@.Data
+	whtm.nifti <- readNIfTI(fsl.wht)
+  whtm <- whtm.nifti@.Data
 	nx <- nrow(csfm)
 	swap <- slicedata$swap
   if(swap) { # read Z-mask slice data consistent with slicedata
-		csf.sl <- csfm[nx:1,,slice,]
-		gry.sl <- grym[nx:1,,slice,]
-		wht.sl <- whtm[nx:1,,slice,]
+		csf.sl <- csfm[nx:1,,slice]
+		gry.sl <- grym[nx:1,,slice]
+		wht.sl <- whtm[nx:1,,slice]
 	} else {
-		csf.sl <- csfm[,,slice,]
-		gry.sl <- grym[,,slice,]
-		wht.sl <- whtm[,,slice,]
+		csf.sl <- csfm[,,slice]
+		gry.sl <- grym[,,slice]
+		wht.sl <- whtm[,,slice]
 	}
 	#----------------
 	kin <- ymaskdata$kin

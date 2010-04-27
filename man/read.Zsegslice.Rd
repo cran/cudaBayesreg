@@ -44,13 +44,14 @@ Faculdade de Ciencias e Tecnologia,\cr \email{afs@fct.unl.pt}.}
 \dontrun{
 fbase <- "swrfM"
 slice <- 21
-slicedata <- read.fmrislice(fbase=fbase, slice=slice, swap=TRUE )
+slicedata <- read.fmrislice(fbase=fbase, slice=slice, swap=FALSE )
 ymaskdata <- premask(slicedata)
 Z <- read.Zsegslice(slicedata, ymaskdata )
 ## Random effects simulation
 fsave <- "/tmp/simultest2.sav"
 out <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=3, fsave=fsave,
 	zprior=TRUE)
-post.ppm(out=out, slicedata=slicedata, vreg=2)
+post.ppm(out=out, slicedata=slicedata, ymaskdata=ymaskdata, vreg=2)
+
 }}
 \keyword{IO}

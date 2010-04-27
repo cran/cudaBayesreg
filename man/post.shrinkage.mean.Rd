@@ -38,7 +38,7 @@
 }
 \examples{
 \dontrun{
-slicedata <- read.fmrislice(fbase="fmri", slice=3, swap=TRUE)
+slicedata <- read.fmrislice(fbase="fmri", slice=3, swap=FALSE)
 ymaskdata <- premask(slicedata)
 fsave1 <- "/tmp/simultest1.sav"
 nu1 <- 3

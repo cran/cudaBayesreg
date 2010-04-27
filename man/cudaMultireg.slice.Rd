@@ -32,9 +32,8 @@ cudaMultireg.slice(slicedata, ymaskdata, R, keep = 5, nu.e = 3,
 		and is referred to as \code{rhierLinearModel} in the R-package \pkg{bayesm}.
 	The main computational work is done in parallel on a CUDA capable GPU. Each thread is responsible for fitting a general linear model at each voxel.
 	The CUDA implementation has the following system requirements: nvcc NVIDIA Cuda Compiler driver, g++ GNU compiler (nvcc compatible version).
-	The package includes source code files to build the libraries \file{libcutil.so} and \file{newmat11.so}.
-	The former, is a shared version of the utility library used by the NVIDIA GPU Computing SDK software (see \file{cudaBayesreg/src/Makefile} for configuration).
-	The latter, is a matrix library by R. B. Davies used by the package's host C++ code.}
+	The package includes source code files to build the library \file{newmat11.so}.
+	This is a matrix library by R. B. Davies used in the package's host C++ code.}
 \value{
   a list containing
   \item{betadraw}{nreg x nvar x R/keep array of individual regression coef draws}
@@ -67,7 +66,7 @@ cudaMultireg.slice(slicedata, ymaskdata, R, keep = 5, nu.e = 3,
 \author{ Adelino Ferreira da Silva, Universidade Nova de Lisboa, Faculdade de Ciencias e Tecnologia, Portugal, \email{afs@fct.unl.pt}.
 }
 \references{
-Adelino Ferreira da Silva, \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, submitted for publication.\cr
+Adelino Ferreira da Silva, \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, submitted for publication.
 
 Rossi, Allenby and McCulloch, \emph{Bayesian Statistics and Marketing}, Chapter 3.\cr
 \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
@@ -92,7 +91,7 @@ Davies, R.B. (1994) \emph{Writing a matrix package in C++}. In OON-SKI'94: The s
 \examples{
 \dontrun{
 ## Simulation using the visual/auditory test dataset "fmri"  
-slicedata <- read.fmrislice(fbase="fmri", slice=3, swap=TRUE)
+slicedata <- read.fmrislice(fbase="fmri", slice=3, swap=FALSE)
 ymaskdata <- premask(slicedata)
 fsave <- "/tmp/simultest1.sav"
 out <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=3,
@@ -110,7 +109,7 @@ summary(out$Vbetadraw)
 ## Random effects simulation using the SPM auditory dataset "swrfM*" 
 fbase <- "swrfM"
 slice <- 21
-slicedata <- read.fmrislice(fbase=fbase, slice=slice, swap=TRUE )
+slicedata <- read.fmrislice(fbase=fbase, slice=slice, swap=FALSE )
 ymaskdata <- premask(slicedata)
 fsave <- "/tmp/simultest3.sav"
 out <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=3,

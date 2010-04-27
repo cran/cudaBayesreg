@@ -20,8 +20,6 @@
   \item{nreg}{number of regressions}
 }
 \references{
-	package \pkg{dcemri},\cr
-
 	FSL/FEAT Analysis tool, FMRIB Software Library (FSL) (\url{www.fmrib.ox.ac.uk/fsl})
 }
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,

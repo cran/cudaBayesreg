@@ -6,7 +6,7 @@
   \code{read.fmrislice} 
 	reads pre-filtered fMRI data, mask data, and the design matrix to be used
 	in fMRI data processing.}
-\usage{read.fmrislice(fbase, slice, swap = TRUE)}
+\usage{read.fmrislice(fbase, slice, swap=FALSE)}
 \arguments{
   \item{fbase}{Indicates the dataset prefix of the fMRI dataset to use.
 	The prefix applies to data files: \file{\{fbase\}_filtered.nii.gz},
@@ -15,10 +15,12 @@
 		the other with prefix \samp{swrfM}.\cr
 	The prefix \samp{swrfM} is used in the random effects example.}
   \item{slice}{The number of the slice to use.}
-	\item{swap}{boolean \{T,F\}; default \samp{T} for RL data display convention consistent with FSLVIEW}
+  \item{swap}{ logical variable (default = \samp{FALSE}) for choosing the
+  right/left data display convention consistent with FSLVIEW }  
 }
 \details{The FSL/FEAT Analysis tool may be used to generate the prefiltered fMRI data
-	 (niislicets), the mask (mask), and the design matrix (dsgn) required as data input.
+  (niislicets), the mask (mask), and the design matrix (dsgn) required as data input.
+  The package \pkg{oro.nifti} is required for reading gzipped NIFTI files.
 }
 \value{a list containing
 	\item{fbase}{dataset prefix of the dataset used in the analysis}
@@ -31,9 +33,10 @@
 	\item{swap}{relative orientation used in the data setup}
 }
 \references{
-	R-package \pkg{dcemri},\cr
+Brandon Whitcher, Volker Schmid and Andrew Thornton, Package \bold{oro.nifti}:
+ Rigorous - NIfTI Input / Output, 2010.
 
-	FSL/FEAT Analysis tool, FMRIB Software Library (FSL) (\url{www.fmrib.ox.ac.uk/fsl})
+FSL/FEAT Analysis tool, FMRIB Software Library (FSL) (\url{www.fmrib.ox.ac.uk/fsl})
 }
 
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,

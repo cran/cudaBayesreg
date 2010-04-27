@@ -43,21 +43,11 @@ installed:
 
    4.
 
-      The *cutil* library used in the source code comes from the CUDA's
-      SDK - NVIDIA GPU Computing Software Development Kit
-      (http://www.nvidia.com/cuda). However, since we need to build the
-      shared version of the cutil library (*libcutil.so*) to use it in
-      R, the package includes in src/cutil the include and source files
-      required to build libcutil.so. The Makefile builds libcutil.so and
-      install it in src/cutil.
-
-   5.
-
       The package's host C++ code uses the shared version of the newmat
       matrix library (http://www.robertnz.net/cpp_site.html). The
       Makefile builds *libnewmat.so* and install it in src/newmat11.
 
-   6.
+   5.
 
       In *cudaMultireg.cu* three constants control the amount of CUDA
       allocated space: REGDIM=4096, OBSDIM=128, and XLIM=5. These

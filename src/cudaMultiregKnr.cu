@@ -3,7 +3,7 @@
 //
 
 #include "mycudamath.cu"
-#include "d_rngNR.cu"
+#include "d_rng.cu"
 
 __global__ void
 cudaruniregNRK(float* d_betabar, float* tau, float* y, int nu, int nreg, int nobs, int m, int seed)
@@ -12,7 +12,7 @@ cudaruniregNRK(float* d_betabar, float* tau, float* y, int nu, int nreg, int nob
 	if(ti >= nreg) return;
 //
 	const float df = nu+nobs; 
-	Gammadev drng(df / 2.0, 0.5, seed+ti);
+	rngGamma drng(df / 2.0, 0.5, seed+ti);
 //
 	float* X = d_X;
 	float* XpX = d_XpX;
@@ -60,12 +60,6 @@ cudaruniregNRK(float* d_betabar, float* tau, float* y, int nu, int nreg, int nob
 	 	d_rnorm(&drng, m, 0., 1., tmp1);
 	 	// d_rnorm( m, 0., 1., 1234, tmp1);
 		mvprod(IR, tmp1, beta, &m, &m);
-#ifdef EMU
-		printf("rnorm:\n");
-		for(int i=0; i < m; i++)
-			printf("  %f ",tmp1[i]);
-		printf("\n");
-#endif
 	  for (int i=0; i < m; i++) 
 			beta[i] = beta[i] + btilde[i]; 
 	}
@@ -82,22 +76,13 @@ cudaruniregNRK(float* d_betabar, float* tau, float* y, int nu, int nreg, int nob
 	float rchi;
 	d_rchisq(&drng, 1, &rchi);
 	// d_rchisq(1, nu+nobs, 1234, &rchi);
-#ifdef EMU
-	printf("s rchi nu df %f %f %d %f \n",s, rchi, nu, df);
-	printf("%f \n", rchi);
-	printf("----\n");
-#endif
-
 	//----------------------------
 	// Results
 	tau[ti] = (nu*ssq[ti] + s)/rchi;
-
 	//	__syncthreads();
-
 	int ix=ti*m;
 	for(int i=0; i < m; i++) {
 		d_betabar[ix+i] = beta[i];
 	}
-
 }
 

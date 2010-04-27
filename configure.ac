@@ -38,7 +38,6 @@ AC_SUBST(HAS_CUDA)
 AC_SUBST(NVCC_CCBIN)
 AC_CONFIG_FILES([
   src/newmat11/Makefile
-  src/cutil/Makefile
   src/Makefile])
 AC_OUTPUT
 

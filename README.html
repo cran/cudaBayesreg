@@ -6,7 +6,7 @@
 	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.1  (Unix)">
 	<META NAME="CREATED" CONTENT="0;0">
 	<META NAME="CHANGEDBY" CONTENT="Adelino ">
-	<META NAME="CHANGED" CONTENT="20091221;9233700">
+	<META NAME="CHANGED" CONTENT="20100427;9221900">
 	<META NAME="" CONTENT="">
 </HEAD>
 <BODY LANG="en-US" DIR="LTR">
@@ -19,15 +19,15 @@ following installed:</P>
 	3.0-beta1) NVIDIA Cuda Compiler driver (available at no cost from
 	<A HREF="http://www.nvidia.com/cuda">http://www.nvidia.com/cuda</A>)</P>
 	<LI><P STYLE="font-weight: normal">A supported version of Linux with
-	g++ GNU compiler;  (gcc/g++ version 3.4 or 4.3 is required, since
+	g++ GNU compiler; (gcc/g++ version 3.4 or 4.3 is required, since
 	nvcc is currently not fully compatible with gcc v. 4.4).</P>
 </OL>
 <P><B>Notes</B>:</P>
 <OL>
 	<LI><P>A general purpose C compiler is needed by nvcc. On Linux
 	platforms, the compiler is assumed to be ‘gcc’ , or ‘g++’
-	for linking. In order to use <B>gcc version 3.4,</B><SPAN STYLE="font-weight: normal">
-	for instance, </SPAN>rename it gcc34, and make a link in directory
+	for linking. In order to use <B>gcc version 3.4,</B> <SPAN STYLE="font-weight: normal">for
+	instance, </SPAN>rename it gcc34, and make a link in directory
 	“<B>/tmp</B>” to it, e.g. “ln -s /usr/bin/gcc34 gcc”. The
 	package's Makefiles expects this configuration to be in place (it
 	uses the nvcc flag “<B>-ccbin /tmp</B>”).</P>
@@ -37,14 +37,6 @@ following installed:</P>
 	<LI><P>To reconfigure the Makefiles with a different “-ccbin”
 	flag, edit the “configure.ac” file and run “autoconf;
 	configure” in the shell.</P>
-	<LI><P>The <B>cutil</B> library used in the source code comes from
-	the CUDA's SDK - NVIDIA GPU Computing Software Development Kit
-	(<A HREF="http://www.nvidia.com/cuda">http://www.nvidia.com/cuda</A>).
-	However, since we need to build the shared version of the cutil
-	library (<B>libcutil.so</B>) to use it in R, the package includes in
-	src/cutil the include and source files required to build
-	libcutil.so. The Makefile builds libcutil.so and install it in
-	src/cutil.</P>
 	<LI><P>The package's host C++ code uses the shared version of the
 	newmat matrix library (<A HREF="http://www.robertnz.net/cpp_site.html">http://www.robertnz.net/cpp_site.html</A>).
 	The Makefile builds <B>libnewmat.so</B> and install it in
