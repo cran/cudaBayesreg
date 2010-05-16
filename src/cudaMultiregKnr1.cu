@@ -1,18 +1,22 @@
+//$Id: cudaMultiregKnr1.cu,v 1.4 2010/05/15 14:39:39 afs Exp $
 //
 // !!! Processing in mycudamath functions assumes column order for compatibility with R
 //
 
-#include "mycudamath.cu"
-#include "d_rng.cu"
+#include "d_rngBrent.cu"
+
+namespace Kbrent {
+
+using namespace Brent_rng;
 
 __global__ void
 cudaruniregNRK(float* d_betabar, float* tau, float* y, int nu, int nreg, int nobs, int m, int seed)
 {
 	const int ti = blockIdx.x * blockDim.x + threadIdx.x;
 	if(ti >= nreg) return;
-//
 	const float df = nu+nobs; 
-	rngGamma drng(df / 2.0, 0.5, seed+ti);
+	const ulint seedti = (ulint)((seed >> 1)+ti);
+	rngGamma drng(df / 2.0, 0.5, seedti);
 //
 	float* X = d_X;
 	float* XpX = d_XpX;
@@ -57,8 +61,8 @@ cudaruniregNRK(float* d_betabar, float* tau, float* y, int nu, int nreg, int nob
 	float beta[XDIM];
 	{
 		float tmp1[XDIM];
-	 	d_rnorm(&drng, m, 0., 1., tmp1);
-	 	// d_rnorm( m, 0., 1., 1234, tmp1);
+		for(int i=0; i < m; i++) tmp1[i]=drng.d_rnorm();
+	 	// d_rnorm(&drng, m, tmp1);
 		mvprod(IR, tmp1, beta, &m, &m);
 	  for (int i=0; i < m; i++) 
 			beta[i] = beta[i] + btilde[i]; 
@@ -74,7 +78,8 @@ cudaruniregNRK(float* d_betabar, float* tau, float* y, int nu, int nreg, int nob
 		resid[i] = yblock[i] - resid[i];
 	vprod(resid, resid, &s, &nobs);
 	float rchi;
-	d_rchisq(&drng, 1, &rchi);
+	rchi = drng.d_rchisq();
+	// d_rchisq(&drng, 1, &rchi);
 	// d_rchisq(1, nu+nobs, 1234, &rchi);
 	//----------------------------
 	// Results
@@ -86,3 +91,4 @@ cudaruniregNRK(float* d_betabar, float* tau, float* y, int nu, int nreg, int nob
 	}
 }
 
+}

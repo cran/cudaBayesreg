@@ -1,3 +1,4 @@
+//$Id: mycudamath.cu,v 1.2 2010/05/15 16:24:57 afs Exp $
 
 __device__ void choldcU(float* a, int* pn, float* y)  
 {

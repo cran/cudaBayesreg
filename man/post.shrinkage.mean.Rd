@@ -27,8 +27,7 @@
 }
 
 \references{
-	Adelino R. Ferreira da Silva \emph{A Bayesian Multilevel Model for fMRI Data Analysis},
-	to be published.
+Adelino Ferreira da Silva, \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, Computer Methods and Programs in Biomedicine, to be published.
 }
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,
 	Faculdade de Ciencias e Tecnologia,\cr
@@ -43,11 +42,11 @@ ymaskdata <- premask(slicedata)
 fsave1 <- "/tmp/simultest1.sav"
 nu1 <- 3
 out1 <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=nu1, fsave=fsave1,
-  zprior=FALSE )
+  zprior=FALSE, rng=1 )
 fsave2 <- "/tmp/simultest2.sav"
 nu2 <- slicedata$nobs
 out2 <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=nu2, fsave=fsave2,
-  zprior=FALSE )
+  zprior=FALSE, rng=1 )
 vreg <- 2
 x1 <- post.shrinkage.mean(out1, slicedata$X, vreg=vreg, plot=F) 
 x2 <- post.shrinkage.mean(out2, slicedata$X, vreg=vreg, plot=F) 

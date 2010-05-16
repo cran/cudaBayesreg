@@ -26,7 +26,7 @@ TARGET : libnewmat.so cudaBayesreg.so
 
 cuda_obj = cudaMultireg.o 
 
-utils_obj = utilsRmultireg.o utilsNewmat.o
+utils_obj = utilsRmultireg.o utilsNewmat.o 
 
 libnewmat.so:
 	( cd newmat11 ; $(MAKE) )

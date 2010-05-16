@@ -1,5 +1,5 @@
 cudaMultireg.slice <-
-function (slicedata, ymaskdata, R = 3000, keep = 5, nu.e = 3, fsave = NA, zprior = FALSE) 
+function (slicedata, ymaskdata, R = 3000, keep = 5, nu.e = 3, fsave = NA, zprior = FALSE, rng=0) 
 {
     X <- slicedata$X
     nvar <- slicedata$nvar
@@ -28,10 +28,10 @@ function (slicedata, ymaskdata, R = 3000, keep = 5, nu.e = 3, fsave = NA, zprior
     cat("\nBegin of Cuda call \n")
     outcuda <- .C("cudaMultireg", as.single(yn), as.single(X), 
         as.single(Z), as.single(Deltabar), as.integer(nz), as.integer(nu.e), 
-        as.integer(nreg), as.integer(nobs), as.integer(nvar), 
-        as.integer(R), as.integer(keep), Vbetadraw = as.single(Vbetadraw), 
-        Deltadraw = as.single(Deltadraw), betadraw = as.single(betadraw), 
-        taudraw = as.single(taudraw))
+        as.integer(nreg), as.integer(nobs), as.integer(nvar),
+        as.integer(R), as.integer(keep), as.integer(rng),
+        Vbetadraw = as.single(Vbetadraw), Deltadraw = as.single(Deltadraw),
+        betadraw = as.single(betadraw), taudraw = as.single(taudraw))
     cat("\nEND of Cuda call \n")
     #-----------------------------
     Vbetadraw <- matrix(outcuda$Vbetadraw, ncol = nvar * nvar, 

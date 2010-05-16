@@ -1,3 +1,5 @@
+//$Id: utilsRmultireg.cc,v 1.2 2010/05/15 16:26:06 afs Exp afs $
+//
 #define MATHLIB_STANDALONE 1
 
 #include <Rmath.h>

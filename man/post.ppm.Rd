@@ -23,7 +23,9 @@ The number of regression variables used in the simulation is equal to the number
   \item{ppm}{ppm image as matrix}
   \item{nactive}{n. of active voxels}}
 \references{
-Adelino R. Ferreira da Silva \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, to be published.}
+Adelino Ferreira da Silva, \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, Computer Methods and Programs in Biomedicine, to be published.
+}
+
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,
 	Faculdade de Ciencias e Tecnologia,\cr
 	\email{afs@fct.unl.pt}.}

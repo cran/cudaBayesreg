@@ -25,8 +25,7 @@
 	\item{beta}{mean of estimated coefficients over all regressions}
 }
 \references{
-	Adelino R. Ferreira da Silva \emph{A Bayesian Multilevel Model for fMRI Data Analysis},
-	to be published.
+Adelino Ferreira da Silva, \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, Computer Methods and Programs in Biomedicine, to be published.
 }
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,
 	Faculdade de Ciencias e Tecnologia,\cr
@@ -40,8 +39,9 @@
 slicedata <- read.fmrislice(fbase="fmri", slice=3, swap=FALSE)
 ymaskdata <- premask(slicedata)
 fsave1 <- "/tmp/simultest1.sav"
+nu1 <- 3
 out <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=nu1, fsave=fsave1,
-  zprior=FALSE )
+  zprior=FALSE, rng=1 )
 vreg <- 2
 post.shrinkage.minmax(out, slicedata$X, vreg=vreg) 
 }}
