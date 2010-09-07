@@ -40,8 +40,8 @@ slicedata <- read.fmrislice(fbase="fmri", slice=3, swap=FALSE)
 ymaskdata <- premask(slicedata)
 fsave1 <- "/tmp/simultest1.sav"
 nu1 <- 3
-out <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=nu1, fsave=fsave1,
-  zprior=FALSE, rng=1 )
+out <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=nu1,
+  fsave=fsave1, zprior=FALSE, rng=1)
 vreg <- 2
 post.shrinkage.minmax(out, slicedata$X, vreg=vreg) 
 }}

@@ -8,7 +8,7 @@
 #	Modified for cudaBayesreg by A. Ferreira da Silva
 #
 plot.hcoef.post <-
-function (x, spmname, spm, burnin = trunc(0.1 * R), ...) 
+function (x, spmname, spm, burnin = trunc(0.1 * R), nsamp=30,   ...) 
 {
     X = x
     if (mode(X) == "list") 
@@ -31,11 +31,12 @@ function (x, spmname, spm, burnin = trunc(0.1 * R), ...)
     #	plot posterior distributions of nvar coef for 30 rand units
     #
     len <- length(spm)
-    nx <- min(30, len)
+    nx <- min(nsamp, len)
     rsam <- sort(sample(spm, nx))
     print(rsam)
-    # x11()
-    par(mfrow = c(1, 1), ask = T)
+    nc <- ceiling(sqrt(nvar))
+    nr <- ceiling(nvar/nc)
+    par(mfrow = c(nr, nc))
     par(las = 3) # horizontal labeling 
     for (var in 1:nvar) {
         ext = X[rsam, var, (burnin + 1):R]
@@ -53,4 +54,5 @@ function (x, spmname, spm, burnin = trunc(0.1 * R), ...)
         if (var == 1) 
             par(ask = dev.interactive())
     }
+    par(mfrow = c(1, 1))
 }

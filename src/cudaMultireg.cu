@@ -13,7 +13,7 @@ using namespace NEWMAT;
 
 #include "utilsFuncs.h"
 // #include <cutil_inline.h>
-// #define TIMER 1
+#define TIMER 1
 
 typedef float real;
 typedef unsigned long ulint; 
@@ -91,7 +91,7 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
   Matrix Delta(nz,nvar); Delta = 0.f; // to be updated 
 //
   DiagonalMatrix Da(nz);
-   Da=0.01f;
+  Da=0.01f;
   SymmetricMatrix A(nz); A = 0.f;
   A.inject(Da);
 //
@@ -188,13 +188,22 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
   cout << "Processing " << R << " iterations:\t '.' = 100 iterations" << endl; 
 
   // -------------------------------
-/*
 #ifdef TIMER
+  cudaEvent_t start;
+  cudaEvent_t end;
+  float elapsed_time;
+  cudaEventCreate(&start);
+  cudaEventCreate(&end);
+
+  cudaEventRecord(start,0);
+
+
+/*
   unsigned int timer = 0;
-  cutilCheckError(cutCreateTimer(&timer));
-  cutilCheckError(cutStartTimer(timer));
-#endif
+  cutCreateTimer(&timer);
+  cutStartTimer(timer);
 */
+#endif
   // -------------------------------
 
   for(int rep=1; rep <= R; rep++) {
@@ -213,6 +222,7 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
     // Run regression kernel
   
 //   cudaThreadSynchronize() ;
+
 
   	// seed1 = rseed();
   	seed1 = rand();
@@ -294,15 +304,22 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
   cout << endl;
 
   // -------------------------------
-/*
 #ifdef TIMER
+
+  cudaEventSynchronize(end);
+  cudaEventRecord(end,0);
+  cudaEventSynchronize(end);
+  cudaEventElapsedTime(&elapsed_time, start, end);
+  std::cout << "Processing time: " << elapsed_time << " milliseconds" << std::endl;
+
+/*
   // stop and destroy timer
-  cutilSafeCall( cudaThreadSynchronize() );
-  cutilCheckError(cutStopTimer(timer));
+  cudaThreadSynchronize();
+  cutStopTimer(timer);
   printf("Processing time: %f (ms) \n", cutGetTimerValue(timer));
-  cutilCheckError(cutDeleteTimer(timer));
-#endif
+  cutDeleteTimer(timer);
 */
+#endif
   // -------------------------------
 
   // clean up memory

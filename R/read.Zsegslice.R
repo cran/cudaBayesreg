@@ -9,11 +9,11 @@ function(slicedata, ymaskdata)
 	fbase <- slicedata$fbase
 	slice <- slicedata$slice
   fsl.csf <- system.file(paste("data/",fbase,"_csf.nii.gz",sep=""),
-		package = "cudaBayesreg")
+		package = "cudaBayesregData")
   fsl.gry <- system.file(paste("data/",fbase,"_gry.nii.gz",sep=""),
-		package = "cudaBayesreg")
+		package = "cudaBayesregData")
   fsl.wht <- system.file(paste("data/",fbase,"_wht.nii.gz",sep=""),
-		package = "cudaBayesreg")
+		package = "cudaBayesregData")
   csfm.nifti <- readNIfTI(fsl.csf)
   csfm <- csfm.nifti@.Data
 	grym.nifti <- readNIfTI(fsl.gry)

@@ -3,7 +3,7 @@ AR=ar
 
 # % CXXFLAGS = -O2 -Wall -shared -fPIC
 
-CXXFLAGS = -shared -fPIC  -O2 -Wall 
+CXXFLAGS = -shared -fPIC -DNDEBUG=1 -O3 
 
 DIFF = ./sdiff
 PRE = ./

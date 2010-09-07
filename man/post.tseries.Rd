@@ -10,7 +10,7 @@
   \item{slicedata}{list(slice=slice, niislicets=niislicets, mask=mask, dsgn=dsgn);
 		input slicedata used in simulation as returned by \code{read.fmrislice}}
   \item{ymaskdata}{list(yn = yn, kin = kin, nreg = nreg);
-		masked and standardized slice data as returned by \code{premask}}
+		masked and standardised slice data as returned by \code{premask}}
   \item{vreg}{number of the active variable to visualize; default(vreg=2).}}
 \details{
 	Use the estimated regression coefficients to visualize the fitted time series

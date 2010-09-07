@@ -6,10 +6,11 @@
 \concept{hierarchical models}
 \concept{linear model}
 
-\title{CUDA Parallel Implementation of a Bayesian Multilevel Model for fMRI Data Analysis}
+\title{CUDA Parallel Implementation of a Bayesian Multilevel Model for fMRI Data Analysis on a fMRI slice}
 \description{
   \code{cudaMultireg.slice} provides an interface to a CUDA implementation
 		of a Bayesian multilevel model for the analysis of brain fMRI data.
+    \code{cudaMultireg.slice} processes a single slice.
 }
 \usage{
 cudaMultireg.slice(slicedata, ymaskdata, R, keep = 5, nu.e = 3,
@@ -19,7 +20,7 @@ cudaMultireg.slice(slicedata, ymaskdata, R, keep = 5, nu.e = 3,
   \item{slicedata}{list(slice=slice, niislicets=niislicets, mask=mask, dsgn=dsgn);
 		input slice data used in simulation as returned by \code{read.fmrislice}}
   \item{ymaskdata}{list(yn = yn, kin = kin, nreg = nreg);
-		masked and standardized slice data as returned by \code{premask}}
+		masked and standardised slice data as returned by \code{premask}}
   \item{R}{number of MCMC draws}
   \item{keep}{MCMC thinning parameter: keep every keepth draw (def: 5)}
   \item{nu.e}{d.f. parameter for regression error variance prior (def: 3)}
@@ -39,7 +40,9 @@ cudaMultireg.slice(slicedata, ymaskdata, R, keep = 5, nu.e = 3,
 	The package includes source code files to build the library \file{newmat11.so}.
 	This is a matrix library by R. B. Davies used in the package's host C++ code.
   The package includes three optional \emph{CUDA-based} RNGs. Marsaglia's multicarry RNG follows the R implementation, is the fastest one,
-    and is used by default; Brent's RNG has higher quality but is not-so-fast; Matsumoto's Mersenne Twister is slow. }
+    and is used by default; Brent's RNG has higher quality but is not-so-fast; Matsumoto's Mersenne Twister is slow.
+  The data sets used in the examples are available in the R-package \pkg{cudaBayesregData}.
+}
 \value{
   a list containing
   \item{betadraw}{nreg x nvar x R/keep array of individual regression coef draws}

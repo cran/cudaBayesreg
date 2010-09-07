@@ -16,7 +16,7 @@ cudaruniregNRK(float* d_betabar, float* tau, float* y, int nu, int nreg, int nob
 	if(ti >= nreg) return;
 	const float df = nu+nobs; 
 	const ulint seedti = (ulint)((seed >> 1)+ti);
-	rngGamma drng(df / 2.0, 0.5, seedti);
+	rngGamma drng(df / 2.0f, 0.5f, seedti);
 //
 	float* X = d_X;
 	float* XpX = d_XpX;

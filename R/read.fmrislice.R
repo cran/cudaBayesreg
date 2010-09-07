@@ -9,9 +9,9 @@ read.fmrislice <-
 function (fbase, slice, swap=FALSE) 
 {
     fsl.filtered <- system.file(paste("data/", fbase, "_filtered_func_data.nii.gz", 
-        sep = ""), package = "cudaBayesreg")
+        sep = ""), package = "cudaBayesregData")
     fsl.mask <- system.file(paste("data/", fbase, "_mask.nii.gz", 
-        sep = ""), package = "cudaBayesreg")
+        sep = ""), package = "cudaBayesregData")
     img.nifti <- readNIfTI(fsl.filtered)
     mask.nifti <- readNIfTI(fsl.mask)
     img <- img.nifti@.Data

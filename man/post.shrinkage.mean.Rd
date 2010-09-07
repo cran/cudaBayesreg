@@ -41,23 +41,23 @@ slicedata <- read.fmrislice(fbase="fmri", slice=3, swap=FALSE)
 ymaskdata <- premask(slicedata)
 fsave1 <- "/tmp/simultest1.sav"
 nu1 <- 3
-out1 <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=nu1, fsave=fsave1,
-  zprior=FALSE, rng=1 )
+out1 <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=nu1,
+  fsave=fsave1, zprior=FALSE, rng=1 )
 fsave2 <- "/tmp/simultest2.sav"
 nu2 <- slicedata$nobs
-out2 <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=nu2, fsave=fsave2,
-  zprior=FALSE, rng=1 )
+out2 <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=nu2,
+  fsave=fsave2, zprior=FALSE, rng=1 )
 vreg <- 2
 x1 <- post.shrinkage.mean(out1, slicedata$X, vreg=vreg, plot=F) 
 x2 <- post.shrinkage.mean(out2, slicedata$X, vreg=vreg, plot=F) 
 par(mfrow=c(1,2), mar=c(4,4,1,1)+0.1)
 xlim=range(c(x1$beta, x2$beta))
 ylim=range(c(x1$yrecmean, x2$yrecmean))
-plot(x1$beta, x1$yrecmean,type="p", pch="+", col="violet", ylim=ylim, xlim=xlim,
-xlab=expression(beta), ylab="y")
+plot(x1$beta, x1$yrecmean,type="p", pch="+", col="violet", ylim=ylim,
+  xlim=xlim, xlab=expression(beta), ylab="y")
 legend("topright", expression(paste(nu,"=3")), bg="seashell")
-plot(x2$beta, x2$yrecmean,type="p", pch="+", col="blue", ylim=ylim, xlim=xlim,
-xlab=expression(beta), ylab="y")
+plot(x2$beta, x2$yrecmean,type="p", pch="+", col="blue", ylim=ylim,
+  xlim=xlim, xlab=expression(beta), ylab="y")
 legend("topright", expression(paste(nu,"=45")), bg="seashell")
 par(mfrow=c(1,1))
 }}

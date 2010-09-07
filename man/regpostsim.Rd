@@ -32,8 +32,8 @@ answ <- readline("Run MCMC simulation first ? ")
 run <- FALSE
 if (substr(answ, 1, 1) == "y") { run <- TRUE }
 if(run) {
-	out <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=3, fsave=fsave,
-   	zprior=FALSE)
+	out <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=3,
+   fsave=fsave, zprior=FALSE)
 } else {
 	load(file=fsave)
 	cat("loaded",fsave,"\n")

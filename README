@@ -1,55 +1,24 @@
 *Installation Notes and Requirements:*
 
-To use the *cudaBayesreg* package on your system you need the following
+To use the 'cudaBayesreg' package on your system you need the following
 installed:
-
-   1.
-
-      CUDA-capable GPU
-
-   2.
-
-      CUDA software, which includes the *nvcc* (release 3.0-beta1)
+   1. CUDA-capable GPU
+   2. CUDA software, which includes the 'nvcc' (release 3.1)
       NVIDIA Cuda Compiler driver (available at no cost from
       http://www.nvidia.com/cuda)
 
-   3.
-
-      A supported version of Linux with g++ GNU compiler; (gcc/g++
-      version 3.4 or 4.3 is required, since nvcc is currently not fully
-      compatible with gcc v. 4.4).
-
 *Notes*:
-
-   1.
-
-      A general purpose C compiler is needed by nvcc. On Linux
+   1. A general purpose C compiler is needed by nvcc. On Linux
       platforms, the compiler is assumed to be ‘gcc’ , or ‘g++’ for
-      linking. In order to use *gcc version 3.4,* for instance, rename
-      it gcc34, and make a link in directory “*/tmp*” to it, e.g. “ln -s
-      /usr/bin/gcc34 gcc”. The package's Makefiles expects this
-      configuration to be in place (it uses the nvcc flag “*-ccbin /tmp*”).
-
-   2.
-
-      In some Linux distributions (e.g. Fedora), to install “gcc34” and
-      “g++34” you just need to install the GNU compatibility packages
-      “compat-gcc-34” and “compat-gcc-34-c++”.
-
-   3.
-
-      To reconfigure the Makefiles with a different “-ccbin” flag, edit
-      the “configure.ac” file and run “autoconf; configure” in the shell.
-
-   4.
-
-      The package's host C++ code uses the shared version of the newmat
+      linking; nvcc releases before version 3.1, are not fully compatible
+      with gcc v4.4.
+   2. It is highly recommended that you test the CUDA installation,
+      by running the examples in the SDK toolkit v3.1, before using
+      'cudaBayesreg'.
+   2. The package's host C++ code uses the shared version of the newmat
       matrix library (http://www.robertnz.net/cpp_site.html). The
-      Makefile builds *libnewmat.so* and install it in src/newmat11.
-
-   5.
-
-      In *cudaMultireg.cu* three constants control the amount of CUDA
+      Makefile builds 'libnewmat.so', and installs it in src/newmat11.
+   3. In 'cudaMultireg.cu' three constants control the amount of CUDA
       allocated space: REGDIM=4096, OBSDIM=128, and XLIM=5. These
       constants define the maximum number of parallel regressions, the
       maximum length of voxel time-series, and the maximum number of

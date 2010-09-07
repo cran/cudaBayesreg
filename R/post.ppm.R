@@ -1,6 +1,7 @@
 
 post.ppm <-
-function(out, slicedata, ymaskdata, vreg = 2, swap = FALSE, plot = TRUE)
+function(out, slicedata, ymaskdata, vreg = 2, swap = FALSE, plot = TRUE,
+  col=gray((0:255)/256))
 {
     # exitpar <- par(no.readonly=T) 
     # par(mfrow=c(1,2))
@@ -57,8 +58,7 @@ function(out, slicedata, ymaskdata, vreg = 2, swap = FALSE, plot = TRUE)
         # x11(width=4,height=4.5)
         par(mar=c(0,0,2,0), xaxt="n", yaxt="n", ask=F)
     		main <- paste("ppm image ; vreg = ",vreg,sep="") 
-        image(ppm.m, col=heat.colors(256), main=main, axes=F)
-        # image(ppm.m, col=gray((0:255)/256), main="ppm image", axes=F)
+        image(ppm.m, col=col, main=main, axes=F)
     }
 		# par(exitpar)
 		invisible(list(ppm=ppm, nactive=nactive))

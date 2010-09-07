@@ -1,8 +1,11 @@
 useDynLib(cudaBayesreg)
 export(
 	cudaMultireg.slice,
+	cudaMultireg.volume,
+  buildzstat.volume,
 	premask,
 	plot.hcoef.post,
+  plot.bayesm.mat,
 	pmeans.hcoef,
 	read.fmrislice,
 	read.Zsegslice,
@@ -13,4 +16,5 @@ export(
 	post.tseries,
 	post.shrinkage.mean,
 	post.shrinkage.minmax,
-	post.randeff)
+	post.randeff,
+  post.overlay)

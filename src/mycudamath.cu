@@ -23,7 +23,7 @@ __device__ void choldcU(float* a, int* pn, float* y)
 			}
 			ii=i+n*i;
 			if (i == j) {
-				if (sum <= float(0.0))  //	A, with rounding errors, is not positive-deﬁnite.
+				if (sum <= 0.0f)  //	A, with rounding errors, is not positive-deﬁnite.
 					return;
 					// throw("\n*** Cholesky failed\n")
 				y[ii]=sqrt(sum);
@@ -39,7 +39,7 @@ __device__ void choldcU(float* a, int* pn, float* y)
 			ji=j+n*i;
 			ij=i+n*j;
 			y[ji] = y[ij];
-			y[ij] = float(0.0);
+			y[ij] = 0.0f;
 		}
 
 /*
@@ -109,7 +109,7 @@ __device__ void mtcrossp(float *a, float *b, float *c, int *pn)
 	//
   for (int i=0; i<n; i++)
 		for (int j=0; j<n; j++) {
-		  sum = 0.0;
+		  sum = 0.0f;
 		  for (int k=0; k<n; k++) {
 				nk=n*k;
 				ik=i+nk;
@@ -132,7 +132,7 @@ __device__ void mvprod(float *a, float *b, float *c, int *pm, int *pn)
 	int ik;
 	//
   for (int i=0; i<m; i++) {
-		sum = 0.0;
+		sum = 0.0f;
 		for (int k=0; k<n; k++) {
 			ik=i+m*k;
 			sum += a[ik] * b[k];
@@ -152,7 +152,7 @@ __device__ void mvprodm(float *a, float *b, float *c, int *pm)
 	int ik;
 	//
   for (int i=0; i<m; i++) {
-		sum = 0.0;
+		sum = 0.0f;
 		for (int k=0; k<m; k++) {
 			ik=i+m*k;
 			sum += a[ik] * b[k];
@@ -172,7 +172,7 @@ __device__ void vprod(float *a, float *b, float *c, int *pm)
 	int m = *pm;
 	float sum;
 	//
-	sum = 0.0;
+	sum = 0.0f;
   for (int i=0; i<m; i++) {
 		sum += a[i] * b[i];
 	}
@@ -191,7 +191,7 @@ __device__ void mvtcrossp(float *a, float *b, float *c, int *pm, int* pn)
 	int ik, mi;
 	//
   for (int i=0; i<n; i++) {
-		sum = 0.0;
+		sum = 0.0f;
 		mi=m*i;
 		for (int k=0; k<m; k++) {
 			ik=mi+k;
