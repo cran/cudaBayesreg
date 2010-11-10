@@ -16,7 +16,7 @@
 \usage{
   fbase <- "fmri"
   fsl.design <- system.file(paste("data/", fbase, "_design.txt", 
-        sep = ""), package = "cudaBayesregData")
+        sep = ""), package = "cudaBayesreg")
   dsgn <- read.table(fsl.design, hea = F)
 }
 \format{

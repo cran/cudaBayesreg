@@ -2,7 +2,12 @@
 
 #include <float.h>
 
-#define WANT_STREAM    
+// #define WANT_STREAM    
+
+using namespace std;
+#include <iostream>
+#include <ostream>
+
 #define WANT_MATH    
 #include "newmatap.h"  
 #include "newmatio.h"
@@ -62,9 +67,9 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
   int seed1, seed2;  
 	srand(rseed());
 
-  if(nreg > REGDIM) { cout << "ERROR: REGDIM exceeded" ; return; } 
-  if(nobs > OBSDIM) { cout << "ERROR: OBSDIM exceeded" ; return; } 
-  if(nvar > XDIM)   { cout << "ERROR: XDIM exceeded" ; return; } 
+  if(nreg > REGDIM) { std::cout << "ERROR: REGDIM exceeded" ; return; } 
+  if(nobs > OBSDIM) { std::cout << "ERROR: OBSDIM exceeded" ; return; } 
+  if(nvar > XDIM)   { std::cout << "ERROR: XDIM exceeded" ; return; } 
 
 // -------------------------------
 // Initial MCMC Parameters 
@@ -185,7 +190,7 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
   // -------------------------------
   // MCMC simulation
   //
-  cout << "Processing " << R << " iterations:\t '.' = 100 iterations" << endl; 
+  std::cout << "Processing " << R << " iterations:\t '.' = 100 iterations" << endl; 
 
   // -------------------------------
 #ifdef TIMER
@@ -247,7 +252,7 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
 
     cudaError_t err = cudaGetLastError();
     if( cudaSuccess != err) {
-        cout << "CUDA Error: " << cudaGetErrorString(err) << endl; 
+        std::cout << "CUDA Error: " << cudaGetErrorString(err) << endl; 
         exit(-1);
     }
 
@@ -297,11 +302,11 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
     }
   
     if(rep%100 == 0)
-      cout.flush() << ".";
+      std::cout.flush() << ".";
   
   }
 
-  cout << endl;
+  std::cout << endl;
 
   // -------------------------------
 #ifdef TIMER

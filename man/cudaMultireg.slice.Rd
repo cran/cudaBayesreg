@@ -81,7 +81,7 @@ Rossi, Allenby and McCulloch, \emph{Bayesian Statistics and Marketing}, Chapter 
 \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
 
 Davies, R.B. (1994) \emph{Writing a matrix package in C++}. In OON-SKI'94: The second annual object-oriented numerics conference, pp 207-213. Rogue Wave Software, Corvallis.\cr 
-\url{http://www.robertnz.net/cpp_site.html}.
+\url{http://www.robertnz.net/cpp\_site.html}.
 
 Richard. P. Brent, \emph{Some long-period random number generators using shifts and xors}, Preprint: 2 July 2007.
 }

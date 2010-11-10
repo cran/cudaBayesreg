@@ -13,7 +13,7 @@ regpostsim(pmeans, vreg, plot=T)}
   \item{vreg}{regression variable to process}
   \item{plot}{plot the histogram, (default=T)}
 }
-\details{Estimate the active and non-active voxels based on the highest posterior density (HPD) of the coefficients simulated by the multilevel method. Plot the histogram of the posterior distribution of regression coefficient "vreg"}
+\details{Estimate the active and non-active voxels based on the highest posterior density (HPD) of the coefficients simulated by the multilevel method. Plot the histogram of the posterior distribution of regression coefficient \samp{vreg}}
 \seealso{
   \code{\link{cudaMultireg.slice}},
   \code{\link{pmeans.hcoef}},

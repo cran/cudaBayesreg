@@ -3,7 +3,7 @@
 To use the 'cudaBayesreg' package on your system you need the following
 installed:
    1. CUDA-capable GPU
-   2. CUDA software, which includes the 'nvcc' (release 3.1)
+   2. CUDA software, which includes the 'nvcc' (release >= 3.1)
       NVIDIA Cuda Compiler driver (available at no cost from
       http://www.nvidia.com/cuda)
 
@@ -11,9 +11,9 @@ installed:
    1. A general purpose C compiler is needed by nvcc. On Linux
       platforms, the compiler is assumed to be ‘gcc’ , or ‘g++’ for
       linking; nvcc releases before version 3.1, are not fully compatible
-      with gcc v4.4.
+      with current versions of gcc/g++ 
    2. It is highly recommended that you test the CUDA installation,
-      by running the examples in the SDK toolkit v3.1, before using
+      by running the examples in the SDK toolkit (>= 3.1), before using
       'cudaBayesreg'.
    2. The package's host C++ code uses the shared version of the newmat
       matrix library (http://www.robertnz.net/cpp_site.html). The
