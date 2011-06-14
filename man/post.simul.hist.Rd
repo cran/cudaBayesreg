@@ -23,7 +23,7 @@
 \examples{
 \dontrun{
 ## load MCMC simulation 
-fsave <- "/tmp/simultest1.sav"
+fsave <- paste(tempdir(),"/simultest1",fileext = ".sav", sep="")
 load(fsave)
 post.simul.hist(out=out, vreg=2)
 post.simul.hist(out=out, vreg=4)

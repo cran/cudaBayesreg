@@ -23,7 +23,7 @@
 \dontrun{
 slicedata <- read.fmrislice(fbase="fmri", slice=3, swap=FALSE)
 ymaskdata <- premask(slicedata)
-fsave <- "/tmp/simultest1.sav"
+fsave <- paste(tempdir(),"/simultest1",fileext = ".sav", sep="")
 answ <- readline("Run MCMC simulation first ? ")
 run <- FALSE
 if (substr(answ, 1, 1) == "y") { run <- TRUE }

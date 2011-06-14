@@ -28,7 +28,7 @@ See description of similar function in \code{bayesm::plot.bayesm.hcoef}.}
 \examples{
 \dontrun{
 ## load simulation
-fsave <- "/tmp/simultest1.sav"
+fsave <- paste(tempdir(),"/simultest1",fileext = ".sav", sep="")
 load(file=fsave)
 cat("loaded",fsave,"\n")
 vreg <- 2

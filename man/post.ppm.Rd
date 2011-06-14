@@ -6,7 +6,7 @@
   \code{post.ppm} 
 	computes the PPM image of voxel activations in a slice.}
 \usage{post.ppm(out, slicedata, ymaskdata, vreg=2, swap=FALSE, plot=TRUE,
-  col=gray((0:255)/256)) }
+  col=heat.colors(256)) }
 \arguments{
   \item{out}{output of MCMC simulation}
   \item{slicedata}{list(slice=slice, niislicets=niislicets, mask=mask, dsgn=dsgn);
@@ -28,7 +28,7 @@
   \item{ppm}{ppm image as matrix}
   \item{nactive}{n. of active voxels}}
 \references{
-  Adelino Ferreira da Silva, \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, Computer Methods and Programs in Biomedicine, to be published.
+Adelino Ferreira da Silva (2011), \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, Computer Methods and Programs in Biomedicine, 102, 238-252.
 }
 
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,
@@ -44,13 +44,13 @@
 \dontrun{
 slicedata <- read.fmrislice(fbase="fmri", slice=3, swap=FALSE)
 ymaskdata <- premask(slicedata)
-fsave <- "/tmp/simultest1.sav"
+fsave <- paste(tempdir(),"/simultest1",fileext = ".sav", sep="")
 answ <- readline("Run MCMC simulation first ? ")
 run <- FALSE
 if (substr(answ, 1, 1) == "y") { run <- TRUE }
 if(run) {
 	out <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5,
-    nu.e=3, fsave=fsave, zprior=FALSE)
+    nu.e=3, zprior=FALSE)
 } else {
 	load(file=fsave)
 	cat("loaded",fsave,"\n")

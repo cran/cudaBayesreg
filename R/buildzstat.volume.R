@@ -4,10 +4,22 @@
 # If rg == NULL build volume with all slices
 #
 buildzstat.volume <-
-function(fbase="swrfM", vreg=2, nu.e=3,  rg=c(NULL,NULL), swap=FALSE, blobsize=3, savedir="/tmp")
+function(fbase=NULL, vreg=2, nu.e=3,
+rg=c(NULL,NULL), swap=FALSE, blobsize=3, savedir=tempdir())
 {
-  fsl.filtered <- system.file(paste("data/", fbase, "_filtered_func_data.nii.gz", 
+  if(!is.null(fbase)) {
+    fsl.filtered <- system.file(paste("extdata/", fbase,
+      "_filtered_func_data.nii.gz", sep = ""), package = "cudaBayesregData")
+    fsl.mask <- system.file(paste("extdata/", fbase, "_mask.nii.gz", 
       sep = ""), package = "cudaBayesregData")
+    ## Design matrix (FSL-like) 
+    fsl.design <- system.file(paste("extdata/", fbase, "_design.mat", 
+      sep = ""), package = "cudaBayesregData")
+  } else {
+    fsl.filtered <- "filtered_func_data.nii.gz"
+    fsl.mask <- "mask.nii.gz"
+    fsl.design <- "design.mat"
+  }
   img.nifti <- readNIfTI(fsl.filtered)
   img <- img.nifti@.Data
 	d <- dim(img)
@@ -25,7 +37,7 @@ function(fbase="swrfM", vreg=2, nu.e=3,  rg=c(NULL,NULL), swap=FALSE, blobsize=3
 	for (sl in (first:last)) {
 		slicedata <- read.fmrislice(fbase=fbase, slice=sl, swap=swap )
 		ymaskdata <- premask(slicedata)
-		mcmcfile <- paste(savedir,"/",fbase,"-s",sl,"-nu",nu.e,".sav",sep="")
+		mcmcfile <- paste(savedir,"/",fbase,"_s",sl,"_nu",nu.e,".sav",sep="")
 		out <- NULL
 		load(mcmcfile)
 		cat("loaded",mcmcfile,"\n")
@@ -58,7 +70,7 @@ function(fbase="swrfM", vreg=2, nu.e=3,  rg=c(NULL,NULL), swap=FALSE, blobsize=3
 		}
 		volppm <- post.ks0(volppm, blobsize=blobsize)
 	}
-	zstatfname <- paste(savedir,"/",fbase,"-zstat",vreg,"-nu",nu.e,sep="")
+	zstatfname <- paste(savedir,"/",fbase,"_zstat",vreg,"_nu",nu.e,sep="")
  	volppm  <- as.nifti(volppm, value = img.nifti, verbose = TRUE)
   writeNIfTI(volppm, zstatfname, verbose=TRUE)
 	cat("saved nifti volume",zstatfname,"\n")

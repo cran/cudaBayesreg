@@ -25,10 +25,6 @@
 	\item{yrecmean}{mean of fitted values}
 	\item{beta}{mean of estimated coefficients over all regressions}
 }
-
-\references{
-Adelino Ferreira da Silva, \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, Computer Methods and Programs in Biomedicine, to be published.
-}
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,
 	Faculdade de Ciencias e Tecnologia,\cr
 	\email{afs@fct.unl.pt}.}
@@ -39,11 +35,11 @@ Adelino Ferreira da Silva, \emph{A Bayesian Multilevel Model for fMRI Data Analy
 \dontrun{
 slicedata <- read.fmrislice(fbase="fmri", slice=3, swap=FALSE)
 ymaskdata <- premask(slicedata)
-fsave1 <- "/tmp/simultest1.sav"
+fsave <- paste(tempdir(),"/simultest1",fileext = ".sav", sep="")
 nu1 <- 3
 out1 <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=nu1,
   fsave=fsave1, zprior=FALSE, rng=1 )
-fsave2 <- "/tmp/simultest2.sav"
+fsave <- paste(tempdir(),"/simultest2",fileext = ".sav", sep="")
 nu2 <- slicedata$nobs
 out2 <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=nu2,
   fsave=fsave2, zprior=FALSE, rng=1 )

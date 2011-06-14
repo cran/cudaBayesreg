@@ -1,6 +1,6 @@
 Package: cudaBayesreg
-Version: 0.3-9
-Date: 2010-11-10
+Version: 0.3-10
+Date: 2011-06-14
 Title: CUDA Parallel Implementation of a Bayesian Multilevel Model for
         fMRI Data Analysis
 Author: Adelino Ferreira da Silva <afs@fct.unl.pt>
@@ -31,5 +31,5 @@ Description: Compute Unified Device Architecture (CUDA) is a software
         the separate package cudaBayesregData.
 License: GPL (>= 2)
 Repository: CRAN
-Packaged: 2010-11-11 13:25:52 UTC; afs
-Date/Publication: 2010-11-12 13:20:31
+Date/Publication: 2011-06-15 18:00:03
+Packaged: 2011-06-14 08:01:48 UTC; afs

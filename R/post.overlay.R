@@ -2,14 +2,23 @@
 # rendering zstat overlays
 #
 post.overlay <-
-function(fbase="swrfM", vreg=2, nu.e=3, rg=c(NULL,NULL), view="axial", savedir="/tmp")
+function(fbase=NULL, vreg=2, nu.e=3, rg=c(NULL,NULL), view="axial", savedir=tempdir())
 {
-  fsl.filtered <- system.file(paste("data/", fbase, "_filtered_func_data.nii.gz", 
-      sep = ""), package = "cudaBayesregData")
+    if(!is.null(fbase)) {
+        fsl.filtered <- system.file(paste("extdata/", fbase,
+          "_filtered_func_data.nii.gz", sep = ""), package = "cudaBayesregData")
+    }
+    else {
+        fsl.filtered <- "filtered_func_data.nii.gz"
+    }
+#####################
+#  fsl.filtered <- system.file(paste("extdata/", fbase,
+#    "_filtered_func_data.nii.gz", sep = ""), package = "cudaBayesregData")
+#####################
 	a <- readNIfTI(fsl.filtered)@.Data[,,,1]
 	cat(paste("loaded", fsl.filtered ,"\n"))
 	da <- dim(a)
-	zstatfname <- paste(savedir,"/",fbase,"-zstat",vreg,"-nu",nu.e,sep="")
+	zstatfname <- paste(savedir,"/",fbase,"_zstat",vreg,"_nu",nu.e,sep="")
 	b <- readNIfTI(zstatfname)@.Data
 	cat(paste("loaded", zstatfname ,"\n"))
 	db <- dim(b)
@@ -43,6 +52,7 @@ function(fbase="swrfM", vreg=2, nu.e=3, rg=c(NULL,NULL), view="axial", savedir="
 		image(bi, col=heat.colors(256), xaxt="n", yaxt="n", add=TRUE, zlim=zlim)
 	}
 }
+
 
 
 

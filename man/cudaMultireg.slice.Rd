@@ -18,14 +18,16 @@ cudaMultireg.slice(slicedata, ymaskdata, R, keep = 5, nu.e = 3,
 }
 \arguments{
   \item{slicedata}{list(slice=slice, niislicets=niislicets, mask=mask, dsgn=dsgn);
-		input slice data used in simulation as returned by \code{read.fmrislice}}
+		input slice data used in simulation as returned by \code{read.fmrislice}.\cr
+		See \code{read.fmrislice} for indications on how to process user defined 
+		datasets.}
   \item{ymaskdata}{list(yn = yn, kin = kin, nreg = nreg);
 		masked and standardised slice data as returned by \code{premask}}
   \item{R}{number of MCMC draws}
   \item{keep}{MCMC thinning parameter: keep every keepth draw (def: 5)}
   \item{nu.e}{d.f. parameter for regression error variance prior (def: 3)}
-	\item{fsave}{filename for saving the MCMC simulation (def: \samp{NULL} do not save)}
-	\item{zprior}{boolean \{T,F\}; default \{F\} - use just a mean for \samp{Z}}
+	\item{fsave}{filename for saving the MCMC simulation (def: \code{NULL} do not save)}
+	\item{zprior}{boolean \{T,F\}; default \{F\} - use just a mean for \code{Z}}
 	\item{rng}{integer \{0,1,2\}: type of RNG to use \{0-Marsaglia Multicarry,
     1-R. P. Brent xorgens, 2-Mersenne Twister MT19937-64\}; (def. 0-Marsaglia Multicarry) }
 }
@@ -33,7 +35,7 @@ cudaMultireg.slice(slicedata, ymaskdata, R, keep = 5, nu.e = 3,
 	The statistical model implemented in CUDA was specified as a Gibbs Sampler for hierarchical linear models
     with a normal prior.
 	This model has been analysed by Rossi, Allenby and McCulloch in \emph{Bayesian Statistics and Marketing},
-   Chapt. 3, and is referred to as \code{rhierLinearModel} in the R-package \pkg{bayesm}.
+   Chapt. 3, and is referred to as \code{rhierLinearModel} in the R package \pkg{bayesm}.
 	The main computational work is done in parallel on a CUDA capable GPU. Each thread is responsible for fitting
     a general linear model at each voxel.
 	The CUDA implementation has the following system requirements: nvcc NVIDIA Cuda Compiler driver, g++ GNU compiler (nvcc compatible version).
@@ -41,7 +43,7 @@ cudaMultireg.slice(slicedata, ymaskdata, R, keep = 5, nu.e = 3,
 	This is a matrix library by R. B. Davies used in the package's host C++ code.
   The package includes three optional \emph{CUDA-based} RNGs. Marsaglia's multicarry RNG follows the R implementation, is the fastest one,
     and is used by default; Brent's RNG has higher quality but is not-so-fast; Matsumoto's Mersenne Twister is slow.
-  The data sets used in the examples are available in the R-package \pkg{cudaBayesregData}.
+  The data sets used in the examples are available in the R package \pkg{cudaBayesregData}.
 }
 \value{
   a list containing
@@ -67,23 +69,29 @@ cudaMultireg.slice(slicedata, ymaskdata, R, keep = 5, nu.e = 3,
         
   By default we suppose that we don't have any z vars, Z=iota (nreg x 1).
 
-	Simulated objects are specified as in \pkg{bayesm} with classes \samp{bayesm.mat} and \samp{bayesm.var}.
+	Simulated objects are specified as in \pkg{bayesm} with classes \code{bayesm.mat} and \code{bayesm.var}.
 	S3 methods to summarize marginal distributions given an array of draws are then compatible with those of \pkg{bayesm} (see Examples).\cr
-	Summaries will be invoked by a call to the generic summary function as in summary(object) where object is of class \samp{bayesm.mat} or \samp{bayesm.var}.\cr
-	A new S3 method (\code{hcoef.post}) is specified for dispatching \samp{betadraw} plots.
+	Summaries will be invoked by a call to the generic summary function as in summary(object) where object is of class \code{bayesm.mat} or \code{bayesm.var}.\cr
+	A new S3 method (\code{hcoef.post}) is specified for dispatching \code{betadraw} plots.
 }
 \author{ Adelino Ferreira da Silva, Universidade Nova de Lisboa, Faculdade de Ciencias e Tecnologia, Portugal, \email{afs@fct.unl.pt}.
 }
-\references{
-Adelino Ferreira da Silva, \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, Computer Methods and Programs in Biomedicine, to be published.
 
-Rossi, Allenby and McCulloch, \emph{Bayesian Statistics and Marketing}, Chapter 3.\cr
+\references{
+Adelino Ferreira da Silva (2011), \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, Computer Methods and Programs in Biomedicine, 102, 238-252.
+
+Adelino Ferreira da Silva (2010), \emph{cudaBayesreg: Bayesian Computation in CUDA}, The R Journal, 2/2, 48-55.
+
+Rossi, Allenby and McCulloch, \emph{Bayesian Statistics and Marketing}, Chapter 3,\cr
 \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
 
-Davies, R.B. (1994) \emph{Writing a matrix package in C++}. In OON-SKI'94: The second annual object-oriented numerics conference, pp 207-213. Rogue Wave Software, Corvallis.\cr 
+Davies, R.B. (1994) \emph{Writing a matrix package in C++}. In OON-SKI'94: The second annual object-oriented numerics conference, pp 207-213. Rogue Wave Software, Corvallis, \cr 
 \url{http://www.robertnz.net/cpp\_site.html}.
 
 Richard. P. Brent, \emph{Some long-period random number generators using shifts and xors}, Preprint: 2 July 2007.
+
+Brandon Whitcher, Volker Schmid and Andrew Thornton (2011), R package \pkg{oro.nifti}: Rigorous - NIfTI Input / Output, R package version 0.2.5,\cr
+\url{http://CRAN.R-project.org/package=oro.nifti}.
 }
 
 \seealso{
@@ -105,7 +113,7 @@ Richard. P. Brent, \emph{Some long-period random number generators using shifts 
 ## Simulation using the visual/auditory test dataset "fmri"  
 slicedata <- read.fmrislice(fbase="fmri", slice=3, swap=FALSE)
 ymaskdata <- premask(slicedata)
-fsave <- "/tmp/simultest1.sav"
+fsave <- paste(tempdir(),"/simultest1",fileext = ".sav", sep="")
 out <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=3,
   fsave=fsave, zprior=FALSE, rng=0 )
 ## Post-processing simulation
@@ -123,7 +131,7 @@ fbase <- "swrfM"
 slice <- 21
 slicedata <- read.fmrislice(fbase=fbase, slice=slice, swap=FALSE )
 ymaskdata <- premask(slicedata)
-fsave <- "/tmp/simultest3.sav"
+fsave <- paste(tempdir(),"/simultest3",fileext = ".sav", sep="")
 out <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=3,
   fsave=fsave, zprior=TRUE, rng=1)
 post.ppm(out=out, slicedata=slicedata, ymaskdata=ymaskdata, vreg=2)

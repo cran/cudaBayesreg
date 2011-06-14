@@ -1,0 +1,8 @@
+Changes in cudaBayesreg version 0.3-10
+
+	o	The package now may handle user defined datasets (see read.fmrislice()).
+
+	o	The design matrix now uses the FSL/FEAT `design.mat' format. 
+
+	o	Input datasets are compatible with the FSL/FEAT pre-processing tool.
+	

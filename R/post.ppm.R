@@ -1,7 +1,7 @@
 
 post.ppm <-
 function(out, slicedata, ymaskdata, vreg = 2, swap = FALSE, plot = TRUE,
-  col=gray((0:255)/256))
+  col=heat.colors(256))
 {
     # exitpar <- par(no.readonly=T) 
     # par(mfrow=c(1,2))

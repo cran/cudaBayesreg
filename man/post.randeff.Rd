@@ -28,7 +28,9 @@
 	and white matter (see examples).
 }
 \references{
-Adelino Ferreira da Silva, \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, Computer Methods and Programs in Biomedicine, to be published.
+Adelino Ferreira da Silva (2011), \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, Computer Methods and Programs in Biomedicine, 102, 238-252.
+
+Adelino Ferreira da Silva (2010), \emph{cudaBayesreg: Bayesian Computation in CUDA}, The R Journal, 2/2, 48-55.
 }
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,
 	Faculdade de Ciencias e Tecnologia,\cr
@@ -45,7 +47,7 @@ fbase <- "swrfM"
 slice <- 21
 slicedata <- read.fmrislice(fbase=fbase, slice=slice)
 ymaskdata <- premask(slicedata)
-fsave <- "/tmp/simultest3.sav"
+fsave <- paste(tempdir(),"/simultest3",fileext = ".sav", sep="")
 out <- cudaMultireg.slice(slicedata, ymaskdata, R=2000, keep=5, nu.e=3,
   fsave=fsave, zprior=TRUE, rng=1)
 ## show random effects for 3 classes

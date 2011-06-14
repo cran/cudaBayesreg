@@ -16,9 +16,6 @@
 	Use the estimated regression coefficients to visualize the fitted time series
 	in an active voxel.
 }
-\references{
-Adelino Ferreira da Silva, \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, Computer Methods and Programs in Biomedicine, to be published.
-}
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,
 	Faculdade de Ciencias e Tecnologia,\cr
 	\email{afs@fct.unl.pt}.}
@@ -33,7 +30,7 @@ Adelino Ferreira da Silva, \emph{A Bayesian Multilevel Model for fMRI Data Analy
 ## read data and load MCMC simulation 
 slicedata <- read.fmrislice(fbase="fmri", slice=3, swap=TRUE)
 ymaskdata <- premask(slicedata)
-fsave <- "/tmp/simultest1.sav"
+fsave <- paste(tempdir(),"/simultest1",fileext = ".sav", sep="")
 load(fsave)
 post.tseries(out=out, slicedata=slicedata, ymaskdata=ymaskdata, vreg=2)
 }}
