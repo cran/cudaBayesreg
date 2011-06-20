@@ -7,7 +7,7 @@ function(out, classnames=NULL, climits=TRUE)
 		ng <- nreff/nvar # total number of groups with intercept
 		cc <- seq(1:nvar)
 		i1=ng*c(0:(nvar-1))+1 # draws of the mean for all groups
-		matplot(out$Deltadraw[,i1], ty="l", col=cc, main=expression(
+		matplot(out$Deltadraw[,i1], type="l", col=cc, main=expression(
 			paste("Draws of the mean of the random effects distribution,",Delta)))
 		mtext(paste("Draws for each of the",nvar,"regression variables"),3)
 		legend("topleft", paste("var",cc), col=cc, lty = c(1, 1, 1), merge = TRUE)
@@ -24,7 +24,7 @@ function(out, classnames=NULL, climits=TRUE)
 			par(ask=T)
 			for(k in 2:nshow) {
 				gi=ng*c(0:(nvar-1))+k
-				matplot(out$Deltadraw[,gi], ty="l", col=cc, ylim=ylim,
+				matplot(out$Deltadraw[,gi], type="l", col=cc, ylim=ylim,
 				 main=paste("Random effects for class ",classnames[k-1],sep=""))
 				mtext(paste("Draws for each var of the",nvar,"regression variables"),3)
 				legend("topleft", paste("var",cc), col=cc, lty = c(1, 1, 1), merge = TRUE)

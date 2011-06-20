@@ -1,3 +1,7 @@
+Changes in cudaBayesreg version 0.3-11
+
+	o	Correction of partial argument match of 'ty' to 'type' in post.randeff
+
 Changes in cudaBayesreg version 0.3-10
 
 	o	The package now may handle user defined datasets (see read.fmrislice()).
