@@ -1,3 +1,7 @@
+Changes in cudaBayesreg version 0.3-12
+
+	o	Removed `Copying' file
+
 Changes in cudaBayesreg version 0.3-11
 
 	o	Correction of partial argument match of 'ty' to 'type' in post.randeff
