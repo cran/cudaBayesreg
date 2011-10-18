@@ -78,20 +78,29 @@ cudaMultireg.slice(slicedata, ymaskdata, R, keep = 5, nu.e = 3,
 }
 
 \references{
-Adelino Ferreira da Silva (2011), \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, Computer Methods and Programs in Biomedicine, 102, 238-252.
 
-Adelino Ferreira da Silva (2010), \emph{cudaBayesreg: Bayesian Computation in CUDA}, The R Journal, 2/2, 48-55.
+Adelino R. Ferreira da Silva (2011). ``\pkg{cudaBayesreg}: Parallel Implementation of a Bayesian Multilevel Model for fMRI Data Analysis.''
+  \emph{Journal of Statistical Software}, \bold{44}(4), 1--24.
+  URL \url{http://www.jstatsoft.org/v44/i04/}.
 
-Rossi, Allenby and McCulloch, \emph{Bayesian Statistics and Marketing}, Chapter 3,\cr
-\url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}
+Adelino Ferreira da Silva (2011). \pkg{cudaBayesregData}: \emph{Data sets for the examples used in the package \pkg{cudaBayesreg}}, R package version	0.3-10.
+  URL \url{http://CRAN.R-project.org/package=cudaBayesregData}.
 
-Davies, R.B. (1994) \emph{Writing a matrix package in C++}. In OON-SKI'94: The second annual object-oriented numerics conference, pp 207-213. Rogue Wave Software, Corvallis, \cr 
-\url{http://www.robertnz.net/cpp\_site.html}.
+Adelino Ferreira da Silva (2011). ``A Bayesian Multilevel Model for fMRI Data Analysis.'', \emph{Computer Methods and Programs in Biomedicine}, \bold{102},(3), 238--252.
 
-Richard. P. Brent, \emph{Some long-period random number generators using shifts and xors}, Preprint: 2 July 2007.
+Adelino Ferreira da Silva (2010). ``\pkg{cudaBayesreg}: Bayesian Computation in CUDA.'', \emph{The R Journal}, \bold{2/2}, 48-55. 
+  URL \url{http://journal.r-project.org/archive/2010-2/RJournal_2010-2_Ferreira~da~Silva.pdf}.
 
-Brandon Whitcher, Volker Schmid and Andrew Thornton (2011), R package \pkg{oro.nifti}: Rigorous - NIfTI Input / Output, R package version 0.2.5,\cr
-\url{http://CRAN.R-project.org/package=oro.nifti}.
+Rossi, Allenby and McCulloch. \emph{Bayesian Statistics and Marketing}, Chapter 3.
+  URL \url{http://faculty.chicagogsb.edu/peter.rossi/research/bsm.html}.
+
+Davies, R.B. (1994). \emph{Writing a matrix package in C++}. In OON-SKI'94: The second annual object-oriented numerics conference, pp 207-213. Rogue Wave Software, Corvallis.
+  URL  \url{http://www.robertnz.net/cpp\_site.html}.
+
+Richard. P. Brent. \emph{Some long-period random number generators using shifts and xors}, Preprint: 2 July 2007.
+
+Brandon Whitcher, Volker Schmid and Andrew Thornton (2011). \pkg{oro.nifti}: \emph{Rigorous - NIfTI Input / Output}, R package version 0.2.5.
+  URL \url{http://CRAN.R-project.org/package=oro.nifti}.
 }
 
 \seealso{

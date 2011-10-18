@@ -1,3 +1,7 @@
+Changes in cudaBayesreg version 0.3-13
+
+	o	References in .Rd pages have been updated
+
 Changes in cudaBayesreg version 0.3-12
 
 	o	Removed `Copying' file

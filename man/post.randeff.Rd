@@ -28,9 +28,14 @@
 	and white matter (see examples).
 }
 \references{
-Adelino Ferreira da Silva (2011), \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, Computer Methods and Programs in Biomedicine, 102, 238-252.
+Adelino R. Ferreira da Silva (2011). ``\pkg{cudaBayesreg}: Parallel Implementation of a Bayesian Multilevel Model for fMRI Data Analysis.''
+  \emph{Journal of Statistical Software}, \bold{44}(4), 1--24.
+  URL \url{http://www.jstatsoft.org/v44/i04/}.
 
-Adelino Ferreira da Silva (2010), \emph{cudaBayesreg: Bayesian Computation in CUDA}, The R Journal, 2/2, 48-55.
+Adelino Ferreira da Silva (2011). ``A Bayesian Multilevel Model for fMRI Data Analysis.'', \emph{Computer Methods and Programs in Biomedicine}, \bold{102},(3), 238--252.
+
+Adelino Ferreira da Silva (2010). ``\pkg{cudaBayesreg}: Bayesian Computation in CUDA.'', \emph{The R Journal}, \bold{2/2}, 48-55. 
+  URL \url{http://journal.r-project.org/archive/2010-2/RJournal_2010-2_Ferreira~da~Silva.pdf}.
 }
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,
 	Faculdade de Ciencias e Tecnologia,\cr

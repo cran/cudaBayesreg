@@ -1,0 +1,19 @@
+citHeader("To cite cudaBayesreg in publications use:")
+
+citEntry(entry = "Article",
+  title        = "{cudaBayesreg}: Parallel Implementation of a Bayesian Multilevel Model for fMRI Data Analysis",
+  author       = person(c("Adelino", "R."), "Ferreira da Silva"),
+  journal      = "Journal of Statistical Software",
+  year         = "2011",
+  volume       = "44",
+  number       = "4",
+  pages        = "1--24",
+  url          = "http://www.jstatsoft.org/v44/i04/",
+
+  textVersion  =
+  paste("Adelino R. Ferreira da Silva (2011).",
+        "cudaBayesreg: Parallel Implementation of a Bayesian Multilevel Model for fMRI Data Analysis.",
+        "Journal of Statistical Software, 44(4), 1-24.",
+        "URL http://www.jstatsoft.org/v44/i04/.")
+)
+

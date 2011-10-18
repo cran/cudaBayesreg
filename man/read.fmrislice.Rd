@@ -61,10 +61,13 @@
 }
 
 \references{
-FSL/FEAT Analysis tool, FMRIB Software Library (FSL) (\url{www.fmrib.ox.ac.uk/fsl})
+Adelino Ferreira da Silva (2011). \pkg{cudaBayesregData}: \emph{Data sets for the examples used in the package \pkg{cudaBayesreg}}, R package version	0.3-10.
+  URL \url{http://CRAN.R-project.org/package=cudaBayesregData}.
 
-Brandon Whitcher, Volker Schmid and Andrew Thornton (2011), R package \pkg{oro.nifti}: Rigorous - NIfTI Input / Output, R package version 0.2.5,\cr
-\url{http://CRAN.R-project.org/package=oro.nifti}.
+FSL/FEAT Analysis tool, FMRIB Software Library (FSL). URL \url{www.fmrib.ox.ac.uk/fsl}.
+
+Brandon Whitcher, Volker Schmid and Andrew Thornton (2011). \pkg{oro.nifti}: \emph{Rigorous - NIfTI Input / Output}, R package version 0.2.5.
+  URL \url{http://CRAN.R-project.org/package=oro.nifti}.
 }
 
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,

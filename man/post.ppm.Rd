@@ -28,7 +28,8 @@
   \item{ppm}{ppm image as matrix}
   \item{nactive}{n. of active voxels}}
 \references{
-Adelino Ferreira da Silva (2011), \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, Computer Methods and Programs in Biomedicine, 102, 238-252.
+Adelino Ferreira da Silva (2011). ``A Bayesian Multilevel Model for fMRI Data Analysis.'', \emph{Computer Methods and Programs in Biomedicine}, \bold{102},(3), 238--252.
+
 }
 
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,

@@ -47,12 +47,22 @@ buildzstat.volume(fbase=NULL, vreg=2, nu.e=3,
 \author{ Adelino Ferreira da Silva, Universidade Nova de Lisboa, Faculdade de Ciencias e Tecnologia, Portugal, \email{afs@fct.unl.pt}.
 }
 \references{
-Adelino Ferreira da Silva (2011), \emph{A Bayesian Multilevel Model for fMRI Data Analysis}, Computer Methods and Programs in Biomedicine, 102, 238-252.
+Adelino R. Ferreira da Silva (2011). ``\pkg{cudaBayesreg}: Parallel Implementation of a Bayesian Multilevel Model for fMRI Data Analysis.''
+  \emph{Journal of Statistical Software}, \bold{44}(4), 1--24.
+  URL \url{http://www.jstatsoft.org/v44/i04/}.
 
-Adelino Ferreira da Silva (2010), \emph{cudaBayesreg: Bayesian Computation in CUDA}, The R Journal, 2/2, 48-55.
+Adelino Ferreira da Silva (2011). \pkg{cudaBayesregData}: \emph{Data sets for the examples used in the package \pkg{cudaBayesreg}}, R package version	0.3-10.
+  URL \url{http://CRAN.R-project.org/package=cudaBayesregData}.
 
-Brandon Whitcher, Volker Schmid and Andrew Thornton (2011), R package \pkg{oro.nifti}: Rigorous - NIfTI Input / Output, R package version 0.2.5,\cr
-\url{http://CRAN.R-project.org/package=oro.nifti}.
+Adelino Ferreira da Silva (2011). ``A Bayesian Multilevel Model for fMRI Data Analysis.'', \emph{Computer Methods and Programs in Biomedicine}, \bold{102},(3), 238--252.
+
+Adelino Ferreira da Silva (2010). ``\pkg{cudaBayesreg}: Bayesian Computation in CUDA.'', \emph{The R Journal}, \bold{2/2}, 48-55. 
+  URL \url{http://journal.r-project.org/archive/2010-2/RJournal_2010-2_Ferreira~da~Silva.pdf}.
+
+Brandon Whitcher, Volker Schmid and Andrew Thornton (2011). \pkg{oro.nifti}: \emph{Rigorous - NIfTI Input / Output}, R package version 0.2.5.
+  URL \url{http://CRAN.R-project.org/package=oro.nifti}.
+
+
 }
 
 \seealso{

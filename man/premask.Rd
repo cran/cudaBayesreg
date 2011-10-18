@@ -20,7 +20,10 @@
   \item{nreg}{number of regressions}
 }
 \references{
-	FSL/FEAT Analysis tool, FMRIB Software Library (FSL) (\url{www.fmrib.ox.ac.uk/fsl})
+Adelino Ferreira da Silva (2011). \pkg{cudaBayesregData}: \emph{Data sets for the examples used in the package \pkg{cudaBayesreg}}, R package version	0.3-10.
+  URL \url{http://CRAN.R-project.org/package=cudaBayesregData}.
+
+	FSL/FEAT Analysis tool, FMRIB Software Library (FSL). URL \url{www.fmrib.ox.ac.uk/fsl}.
 }
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,
 	Faculdade de Ciencias e Tecnologia,\cr

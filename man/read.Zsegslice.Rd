@@ -34,10 +34,13 @@
 	\item{Z}{centered matrix specifying the characteristics of cross-sectional units (optional group information)}
 }
 \references{
-FSL/FEAT Analysis tool, FMRIB Software Library (FSL) (\url{www.fmrib.ox.ac.uk/fsl})\cr
+Adelino Ferreira da Silva (2011). \pkg{cudaBayesregData}: \emph{Data sets for the examples used in the package \pkg{cudaBayesreg}}, R package version	0.3-10.
+  URL \url{http://CRAN.R-project.org/package=cudaBayesregData}.
 
-\emph{SPM8 Manual}, John Ashburner et. al., Functional Imaging Laboratory,
-Institute of Neurology, UCL, London, (\url{http://www.fil.ion.ucl.ac.uk/spm/})
+FSL/FEAT Analysis tool, FMRIB Software Library (FSL). URL \url{www.fmrib.ox.ac.uk/fsl}.
+
+John Ashburner et. al.. \emph{SPM8 Manual},  Functional Imaging Laboratory,
+Institute of Neurology, UCL, London. URL \url{http://www.fil.ion.ucl.ac.uk/spm/}.
 }
 \author{A. Ferreira da Silva, Universidade Nova de Lisboa,
 Faculdade de Ciencias e Tecnologia,\cr \email{afs@fct.unl.pt}.}
