@@ -7,8 +7,7 @@
 # P. Rossi 2/07
 #	Modified for cudaBayesreg by A. Ferreira da Silva
 #
-plot.hcoef.post <-
-function (x, spmname, spm, burnin = trunc(0.1 * R), nsamp=30,   ...) 
+plot.hcoef.post=function (x, spmname, spm, burnin = trunc(0.1 * R), nsamp=30,   ...) 
 {
     X = x
     if (mode(X) == "list") 
@@ -55,4 +54,5 @@ function (x, spmname, spm, burnin = trunc(0.1 * R), nsamp=30,   ...)
             par(ask = dev.interactive())
     }
     par(mfrow = c(1, 1))
+    invisible()
 }

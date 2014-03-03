@@ -1,3 +1,7 @@
+Changes in cudaBayesreg version 0.3-14
+
+	o Minor corrections for CRAN compatibility
+
 Changes in cudaBayesreg version 0.3-13
 
 	o	References in .Rd pages have been updated

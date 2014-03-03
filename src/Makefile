@@ -4,12 +4,12 @@ MAKE=make
 
 ifeq (TRUE,TRUE)
   NVCC=/usr/local/cuda//bin/nvcc
-  NVCCFLAGS = --compiler-options -fno-strict-aliasing --compiler-options -DNDEBUG=1 -O3 -Xcompiler "-fPIC" -Xlinker "-fPIC" -I/usr/local/cuda//include -I./newmat11 -I/usr/local/lib64/R/include
+  NVCCFLAGS = --compiler-options -fno-strict-aliasing --compiler-options -DNDEBUG=1 -O3 -Xcompiler "-fPIC" -Xlinker "-fPIC" -I/usr/local/cuda//include -I./newmat11 -I/usr/lib/R/include
   NVCCLINKS = -shared -Xcompiler "-fPIC" -Xlinker "-fPIC" -lRmath -lcuda -L./newmat11 -lnewmat
 endif
 
-CPPFLAGS = -shared -fPIC -DNDEBUG=1 -O3 -pipe -Wall -I/usr/local/cuda//include -I./newmat11 -I/usr/local/lib64/R/include
-CPPFLAGS2 = -shared -fPIC -DNDEBUG=1 -O3 -pipe -Wall -I/usr/local/lib64/R/include
+CPPFLAGS = -shared -fPIC -DNDEBUG=1 -O3 -pipe -Wall -I/usr/local/cuda//include -I./newmat11 -I/usr/lib/R/include
+CPPFLAGS2 = -shared -fPIC -DNDEBUG=1 -O3 -pipe -Wall -I/usr/lib/R/include
 
 DIFF = ./sdiff
 PRE = ./

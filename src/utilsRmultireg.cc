@@ -29,7 +29,8 @@ void varnr(const Real data[], const int n, Real *var)
 	// printf("n must be at least 2 in moment\n"); exit(1);
 	if (n <= 1) {
 		cout << "n must be at least 2 in moment" << endl;
-	 	exit(1);
+	 	// exit(1);
+                return;
  	}
 	s=0.0;
 	(*var)=0.0;

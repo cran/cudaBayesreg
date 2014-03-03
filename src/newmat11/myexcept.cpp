@@ -228,7 +228,8 @@ void Terminate()
    cout << "\n\nThere has been an exception with no handler - exiting";
    const char* what = BaseException::what();
    if (what) cout << what << "\n";
-   exit(1);
+   // exit(1);
+   return;
 }
 
 
@@ -268,7 +269,8 @@ void FCLIntArray::Report()
 void FreeCheck::Register(void* t, char* name)
 {
    FCLClass* f = new FCLClass(t,name);
-   if (!f) { cout << "Out of memory in FreeCheck\n"; exit(1); }
+   // if (!f) { cout << "Out of memory in FreeCheck\n"; exit(1); }
+   if (!f) { cout << "Out of memory in FreeCheck\n"; return; }
 #ifdef REG_DEREG
    cout << "Registering   " << name << "   " << (unsigned long)t << "\n";
 #endif
@@ -277,7 +279,8 @@ void FreeCheck::Register(void* t, char* name)
 void FreeCheck::RegisterR(void* t, char* o, int s)
 {
    FCLRealArray* f = new FCLRealArray(t,o,s);
-   if (!f) { cout << "Out of memory in FreeCheck\n"; exit(1); }
+   // if (!f) { cout << "Out of memory in FreeCheck\n"; exit(1); }
+   if (!f) { cout << "Out of memory in FreeCheck\n"; return; }
 #ifdef REG_DEREG
    cout << o << "   " << s << "   " << (unsigned long)t << "\n";
 #endif
@@ -286,7 +289,8 @@ void FreeCheck::RegisterR(void* t, char* o, int s)
 void FreeCheck::RegisterI(void* t, char* o, int s)
 {
    FCLIntArray* f = new FCLIntArray(t,o,s);
-   if (!f) { cout << "Out of memory in FreeCheck\n"; exit(1); }
+   // if (!f) { cout << "Out of memory in FreeCheck\n"; exit(1); }
+   if (!f) { cout << "Out of memory in FreeCheck\n"; return; }
 #ifdef REG_DEREG
    cout << o << "   " << s << "   " << (unsigned long)t << "\n";
 #endif

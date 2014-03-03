@@ -19,7 +19,8 @@ char *modelkey(FILE *fd, char *keyline, const char *key)
     if ( (strncmp(keyline,key,strlen(key))==0) )
       return keyline+strlen(key);
   printf("Error: key \"%s\" not found.\n",key);
-  exit(1);
+  // exit(1);
+  return(keyline);
 }
 
 vector<double> readdesign(char* filename, int *nevs, int *npts)

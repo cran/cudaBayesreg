@@ -253,7 +253,8 @@ void cudaMultireg(float* y, float* X, float* pZ, float* pDeltabar, int* pnz, int
     cudaError_t err = cudaGetLastError();
     if( cudaSuccess != err) {
         std::cout << "CUDA Error: " << cudaGetErrorString(err) << endl; 
-        exit(-1);
+        // exit(-1);
+        return;
     }
 
     // -------------------------------
