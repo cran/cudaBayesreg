@@ -1,13 +1,13 @@
 Package: cudaBayesreg
-Version: 0.3-15
-Date: 2014-03-03
+Version: 0.3-16
+Date: 2015-01-07
 Title: CUDA Parallel Implementation of a Bayesian Multilevel Model for
         fMRI Data Analysis
 Author: Adelino Ferreira da Silva <afs@fct.unl.pt>
 Maintainer: Adelino Ferreira da Silva <afs@fct.unl.pt>
-Depends: R (>= 2.9.2), cudaBayesregData, oro.nifti
+Depends: R (>= 3.0.0), cudaBayesregData, oro.nifti
 SystemRequirements: nvcc (release >= 3.1) (NVIDIA Cuda Compiler
-        driver); Linux operating system.
+        driver); Linux operating system; GNU make.
 Description: Compute Unified Device Architecture (CUDA) is a software
         platform for massively parallel high-performance computing on
         NVIDIA GPUs. This package provides a CUDA implementation of a
@@ -34,5 +34,5 @@ NeedsCompilation: yes
 License: GPL (>= 2)
 URL: http://www.r-project.org
 Repository: CRAN
-Packaged: 2014-03-03 09:21:19 UTC; arfs
-Date/Publication: 2014-03-03 10:48:17
+Packaged: 2015-01-07 14:09:21 UTC; arfs
+Date/Publication: 2015-01-07 16:10:12
